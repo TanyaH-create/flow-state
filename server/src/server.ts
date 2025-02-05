@@ -5,7 +5,7 @@
 //express is the framework for handling HTTP requests and responses
 import express from 'express';
 
-// TODO: Create Sequelize connector from models folder and import 
+// Create Sequelize connector from models folder and import 
 // in to connect to postgres server. 
 //manages databse connection
 import sequelize from './config/connection.js';
