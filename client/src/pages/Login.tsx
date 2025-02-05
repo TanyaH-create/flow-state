@@ -21,13 +21,11 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await login(loginData);
-      //add coded to check for null
-      if (data && data.token) {
-        Auth.login(data.token);
+     if (data && data.password) { // Check if password is returned (or any other success indicator)
+        console.log('Login Successful');
       } else {
-        console.error('Login Failed: No token returned')
-        alert('Login failed, please try again')
-      }
+        console.error('Login Failed: Incorrect password');
+      }   
 
     } catch (err) {
       console.error('Failed to login', err);
