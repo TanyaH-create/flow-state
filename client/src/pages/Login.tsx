@@ -19,13 +19,15 @@ const Login = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    try {
+   try {
       const data = await login(loginData);
-     if (data && data.password) { // Check if password is returned (or any other success indicator)
-        console.log('Login Successful');
+      //add coded to check for null
+      if (data && data.token) {
+     //   Auth.login(data.token);
       } else {
-        console.error('Login Failed: Incorrect password');
-      }   
+        console.error('Login Failed: No token returned')
+        alert('Login failed, please try again')
+      }
 
     } catch (err) {
       console.error('Failed to login', err);
