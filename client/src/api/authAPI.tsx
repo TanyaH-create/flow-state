@@ -1,4 +1,4 @@
-import { UserLogin } from "../interfaces/UserLogin";
+import UserLogin from "../interfaces/UserLogin";
 
 interface LoginResponse {
   token: string;

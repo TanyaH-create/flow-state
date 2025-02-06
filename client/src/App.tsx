@@ -2,9 +2,16 @@
 
 function App() {
   return (
-    <div>
+    <>
+      <Navbar />
       <h1>Welcome To Flow State</h1>
-    </div>
+        <main>
+          <Outlet />
+        </main>
+
+
+
+    </>
   )
 }
 
