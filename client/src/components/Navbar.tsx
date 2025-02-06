@@ -1,10 +1,12 @@
 //Navbar.tsx
+import "./Navbar.css";
 import LoginModal from "./LoginModal";
+
 
 
 const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg">
       <div className="container-fluid">
         <a className="navbar-brand" href="#"></a>
         <button

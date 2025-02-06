@@ -1,13 +1,12 @@
 //LoginModal.tsx
-import React, { useState }from "react";
-import { User } from '../interfaces/User.tsx'
+import React, { useState } from "react";
+import { User } from "../interfaces/User.tsx";
 
 //https://getbootstrap.com/docs/5.3/components/modal/
 
 interface LoginModalProps {
-    onLogin: (user: User) => void; // Replace 'any' with a proper user type
-  }
-
+  onLogin: (user: User) => void; // Replace 'any' with a proper user type
+}
 
 const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   const [email, setEmail] = useState("");
@@ -34,12 +33,23 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="modal fade" id="loginModal" tabIndex={-1}>
+    <div
+      className="modal fade"
+      id="loginModal"
+      tabIndex={-1}
+      aria-labelledby="loginModalLabel"
+      aria-hidden="true"
+    >
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
             <h5 className="modal-title">Login</h5>
-            <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div className="modal-body">
             <form onSubmit={handleLogin}>
@@ -51,6 +61,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
+                  aria-label="Enter your email address"
                 />
               </div>
               <div className="mb-3">
@@ -61,9 +72,16 @@ const LoginModal: React.FC<LoginModalProps> = ({ onLogin }) => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
+                  aria-label="Enter your password"
                 />
               </div>
-              <button type="submit" className="btn btn-primary">Login</button>
+              <button
+                type="submit"
+                className="btn btn-primary"
+                aria-label="Login"
+              >
+                Login
+              </button>
             </form>
           </div>
         </div>

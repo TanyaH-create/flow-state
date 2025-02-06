@@ -1,0 +1,24 @@
+/* Navbar.css */
+:root {
+    --light: #f8f9fa; /* Define your preferred light color */
+  }
+  
+  .navbar {
+    background-color: var(--light) !important;
+    width: 100%; /*span whole width */
+    padding: 0px;
+  }
+
+  
+/* Login Button */
+.btn-primary {
+  margin-left: auto;
+}
+
+.btn-primary:hover {
+  background-color: var(--bs-btn-primary-hover-bg);
+}
+
+.btn-primary:focus {
+  background-color: var(--bs-btn-primary-focus-bg);
+}

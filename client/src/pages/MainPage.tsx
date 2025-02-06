@@ -6,7 +6,9 @@ function MainPage () {
   return (
     <>
      <Navbar />
-       <h1>Welcome To Flow State</h1>
+     <main className="main-container">
+       <img src="/images/logo.png" alt="Flow State Logo" className="logo" />
+     </main>
     </>
   )
 }
