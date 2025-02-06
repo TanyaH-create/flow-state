@@ -6,13 +6,25 @@ import './index.css'
 
 import App from './App.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
+import MainPage from './pages/MainPage.tsx'
 
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/',                 //root route
     element: <App />,
     errorElement: <ErrorPage />,
+    children: [
+    {
+      index: true,      // when root is visited, MainPage will load as outlet
+      element: <MainPage />
+    }, 
+/*    {
+      path: '/dash',
+      element: <DashPage />
+    },
+*/
+  ]
   }
 ]);
 

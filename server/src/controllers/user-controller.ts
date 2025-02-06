@@ -32,11 +32,11 @@ export const getUserById = async (req: Request, res: Response) => {
 
 // POST /Users
 export const createUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
    // const newUser = await User.create({ username, password });
    // res.status(201).json(newUser);
-   res.status(201).json({message: `user created ${username} ${password}` })
+   res.status(201).json({message: `user created ${email} ${password}` })
   } catch (error: any) {
     res.status(400).json({ message: error.message });
   }
@@ -45,11 +45,11 @@ export const createUser = async (req: Request, res: Response) => {
 // PUT /Users/:id
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
-      user.username = username;
+      user.email = email;
       user.password = password;
       await user.save();
       res.json(user);
