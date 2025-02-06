@@ -33,7 +33,7 @@ input:-moz-placeholder {
 
 
 body {
-  background: var(light);
+  background: var(--light);
   background-size: cover;
   background-repeat: no-repeat no-repeat;
   background-position: center center;
@@ -46,6 +46,6 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: var(dark-text);
+  color: var(--medium-charcoal);
 }
 
