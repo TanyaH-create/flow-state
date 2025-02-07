@@ -1,9 +1,10 @@
 import { Sequelize } from 'sequelize';
 import { UserFactory, User } from './user.js';
-import { TaskFactory,Task } from './tasks';
-import { BadgeFactory, Badge } from './badge';
-import { UserBadgeFactory, UserBadge } from './userBadge';
+import { TaskFactory,Task } from './tasks.js';
+import { BadgeFactory, Badge } from './badge.js';
+import { UserBadgeFactory, UserBadge } from './userBadge.js';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 
@@ -22,10 +23,16 @@ const sequelize = process.env.DB_URL
       }
     );
 
+  console.log('sequelize instance created', sequelize)
+
 UserFactory(sequelize);
+console.log('user table created')
 TaskFactory(sequelize);
+console.log('task table created')
 BadgeFactory(sequelize);
+console.log('badge table created')
 UserBadgeFactory(sequelize);
+console.log('user badge table created')
 
 // A user can have many tasks
 User.hasMany(Task, { foreignKey: 'userId', onDelete: 'CASCADE' });
