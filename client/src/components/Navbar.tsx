@@ -1,4 +1,4 @@
-//Navbar.tsx
+/* //Navbar.tsx
 import "./Navbar.css";
 import LoginModal from "./LoginModal";
 
@@ -25,4 +25,4 @@ const Navbar = () => {
 
 export default Navbar;
 
-
+*/

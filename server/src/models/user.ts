@@ -1,3 +1,5 @@
+// user.ts
+
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
 
@@ -8,7 +10,8 @@ interface UserAttributes {
   rank: number;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
+//rank and id are optional when creating new user
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'rank'> {}
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
@@ -24,7 +27,15 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
     const saltRounds = 10;
     this.password = await bcrypt.hash(password, saltRounds);
   }
+
+  // Check if password was changed before hashing it
+  public async checkAndSetPassword() {
+    if (this.changed('password')) {
+      await this.setPassword(this.password);
+    }
+  }
 }
+
 
 export function UserFactory(sequelize: Sequelize): typeof User {
   User.init(

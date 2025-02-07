@@ -47,20 +47,35 @@ body {
 }
 
 .main-container {
-  width: 100%;  /* Full width */
-  height: 100vh;  /* Full viewport height */
   display: flex;
-  flex-direction: column;
-  align-items: center;  /* Center horizontally */
-  justify-content: center;  /* Center vertically */
-  text-align: center;
+  min-height: 100vh;
 }
 
+.right-side {
+  flex: 0 0 33%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  background-color: var(--light);
+  
+}
+
+.left-side {
+  flex: 0 0 66%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-container {
+  margin-bottom: 400px;
+}
+
+
 .logo {
-  /* width: 50vw; */ /* 50% of the viewport width */
- /* max-width: 100%;  /* max size */ 
-  height: auto;  /* Maintain aspect ratio */
-  margin-top: 20px;
+  max-width: 100%;
+  height: auto;
 }
 
 
