@@ -1,9 +1,11 @@
+//Connection.ts
+import { Sequelize } from 'sequelize';
+import { UserFactory } from '../models/user.js';
 import dotenv from 'dotenv';
 dotenv.config();
+//import { User } from '../models/user.js';
 
 
-
-import { Sequelize } from 'sequelize';
 
 //  Create sequelize connection
 const sequelize = process.env.DB_URL
@@ -20,6 +22,10 @@ const sequelize = process.env.DB_URL
         },
       }
     );
+  
+    UserFactory(sequelize);
+    
+    console.log('Sequlize', sequelize)
 
 
-export default sequelize;
+    export default sequelize;

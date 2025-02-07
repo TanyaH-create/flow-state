@@ -1,14 +1,26 @@
 import { Sequelize } from 'sequelize';
-import { UserFactory, User } from './user';
+import { UserFactory, User } from './user.js';
 import { TaskFactory,Task } from './tasks';
 import { BadgeFactory, Badge } from './badge';
 import { UserBadgeFactory, UserBadge } from './userBadge';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const sequelize = new Sequelize('tasks_db', 'username', 'password', {
-    host: 'localhost',
-    dialect: 'postgres',
-    logging: false,
-});
+
+const sequelize = process.env.DB_URL
+  ? new Sequelize(process.env.DB_URL)
+  : new Sequelize(
+      process.env.DB_NAME || '',
+      process.env.DB_USER || '',
+      process.env.DB_PASSWORD,
+      {
+        host: 'localhost',
+        dialect: 'postgres',
+        dialectOptions: {
+          decimalNumbers: true,
+        },
+      }
+    );
 
 UserFactory(sequelize);
 TaskFactory(sequelize);

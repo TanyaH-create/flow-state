@@ -4,9 +4,7 @@ import jwt from "jsonwebtoken";
 //use environment variables
 import dotenv from "dotenv";
 
-interface JwtPayload {
-  username: string;
-}
+
 
  const authenticateToken = ( req: Request, res: Response, next: NextFunction): any => {
   // Verify the token exists and add the user data to the request object

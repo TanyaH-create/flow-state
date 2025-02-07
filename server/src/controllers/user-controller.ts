@@ -1,24 +1,27 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user.js";  // Ensure correct path
+import { User } from "../models/user.js";
 import dotenv from "dotenv";
 
 dotenv.config();
-
+console.log('User Controller Loaded')
+console.log("User Model:", User);
+console.log("User Methods:", User ? Object.keys(User) : "User is undefined");
 
 // REGISTER a new user
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
-
+  console.log(`new user: ${email}  ${password}`)
   try {
+    console.log('User=', User)
     // Check if the user already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       res.status(400).json({ message: "User already exists" });
       return;
     }
-
+    
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
