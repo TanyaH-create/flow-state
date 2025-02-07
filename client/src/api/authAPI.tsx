@@ -1,10 +1,10 @@
-import { UserLogin } from "../interfaces/UserLogin";
+import { User } from "../interfaces/User";
 
 interface LoginResponse {
   token: string;
 }
 //user creating a login
-const login = async (userInfo: UserLogin): Promise<LoginResponse | null> => {
+const login = async (userInfo: User): Promise<LoginResponse | null> => {
   // TODO: make a POST request to the login route
   try {
     // Make a POST request to the login route

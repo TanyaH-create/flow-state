@@ -1,16 +1,30 @@
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import './index.css'
 
 import App from './App.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
+import MainPage from './pages/MainPage.tsx'
 
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/',                 //root route
     element: <App />,
     errorElement: <ErrorPage />,
+    children: [
+    {
+      index: true,      // when root is visited, MainPage will load as outlet
+      element: <MainPage />
+    }, 
+/*    {
+      path: '/dash',
+      element: <DashPage />
+    },
+*/
+  ]
   }
 ]);
 

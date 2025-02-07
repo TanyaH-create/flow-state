@@ -10,6 +10,15 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+    /*color Scheme Variables*/
+    --light:  #f9f7e3; 
+    --light-blue: #b5e2fa;
+    --dark: #242d32;
+    --medium-charcoal:  #404e5c;
+    --red: #c0392b;
+    --amber: #ffbf00;
+    --medium-blue: #55c0cd;
+
 }
 
 /* webkit solution */
@@ -24,7 +33,7 @@ input:-moz-placeholder {
 
 
 body {
-  background: #2EC0F9;
+  background: var(--light);
   background-size: cover;
   background-repeat: no-repeat no-repeat;
   background-position: center center;
@@ -37,6 +46,6 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-  color: white;
+  color: var(--medium-charcoal);
 }
 

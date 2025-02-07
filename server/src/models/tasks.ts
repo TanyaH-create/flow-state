@@ -29,6 +29,12 @@ export function TaskFactory(sequelize: Sequelize): typeof Task {
             userId: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
+                references: {
+                    model: 'users',  // match table name in UserFactory
+                    key: 'id',
+                },
+                onUpdate: 'CASCADE', //if change to user id occurs change here
+                onDelete: 'CASCADE',
             },
             title: {
                 type: DataTypes.STRING,

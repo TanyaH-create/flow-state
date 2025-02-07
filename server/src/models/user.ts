@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: number;
-  username: string;
+  email: string;
   password: string;
   rank: number;
 }
@@ -12,7 +12,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
-  public username!: string;
+  public email!: string;
   public password!: string;
   public rank!: number;
 
@@ -34,7 +34,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         autoIncrement: true,
         primaryKey: true,
       },
-      username: {
+      email: {
         type: DataTypes.STRING,
         allowNull: false,
       },
