@@ -23,16 +23,12 @@ const sequelize = process.env.DB_URL
       }
     );
 
-  console.log('sequelize instance created', sequelize)
 
 UserFactory(sequelize);
-console.log('user table created')
 TaskFactory(sequelize);
-console.log('task table created')
 BadgeFactory(sequelize);
-console.log('badge table created')
 UserBadgeFactory(sequelize);
-console.log('user badge table created')
+
 
 // A user can have many tasks
 User.hasMany(Task, { foreignKey: 'userId', onDelete: 'CASCADE' });
