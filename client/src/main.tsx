@@ -7,7 +7,7 @@ import './index.css'
 import App from './App.tsx';
 import ErrorPage from './pages/ErrorPage.tsx';
 import MainPage from './pages/MainPage.tsx'
-
+import DashPage from './pages/DashPage.tsx'
 
 const router = createBrowserRouter([
   {
@@ -19,11 +19,10 @@ const router = createBrowserRouter([
       index: true,      // when root is visited, MainPage will load as outlet
       element: <MainPage />
     }, 
-/*    {
+    {
       path: '/dash',
       element: <DashPage />
     },
-*/
   ]
   }
 ]);

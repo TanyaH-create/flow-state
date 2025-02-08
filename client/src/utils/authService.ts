@@ -1,3 +1,4 @@
+//client/src/utils.auth.ts
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 class AuthService {

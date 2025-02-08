@@ -1,30 +1,27 @@
 import { User } from "../interfaces/User";
 
+
 interface LoginResponse {
   token: string;
 }
 //user creating a login
 const login = async (userInfo: User): Promise<LoginResponse | null> => {
-  // TODO: make a POST request to the login route
   try {
-    // Make a POST request to the login route
-    const response = await fetch('/auth/login', {
+      const response = await fetch('/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(userInfo), // Convert user info to JSON
+      body: JSON.stringify(userInfo), // send user credentials
     });
 
     if (!response.ok) {
-      throw new Error('Login failed');
+      throw new Error('Login failed: Invalid credentials or server error');
     }
     
-    //if login is successful, a token will be sent in the response
-    //from the login in server/auth-routes
-    //store toke in data
-
+    //if login is successful, a new token will be sent in the response
     const data: LoginResponse = await response.json();
+    console.log(`Login fetch request response: ${data}`)
     // Check if a token is present in the response
     if (data.token) {
       // Store token in localStorage

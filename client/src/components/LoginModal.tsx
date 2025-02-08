@@ -4,22 +4,23 @@ import React,  { useState } from "react";
 
 interface LoginModalProps {
   isLoginMode: boolean;
+  onLoginSuccess: ()=> void; //callback for a successful login
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const handleLoginOrRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
     try {
       if (isLoginMode) {
         // Use login function from authAPI.tsx
         const data = await login({email, password});
-
+        console.log(`Login Mode: ${email}  ${password}`)
         if (data && data.token) {
           localStorage.setItem("token", data.token);
+          onLoginSuccess(); //Navigate to the dahsboard page
         } else {
           alert("Login failed");
         }
