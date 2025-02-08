@@ -5,16 +5,13 @@ import { User } from "../models/user.js";
 import dotenv from "dotenv";
 
 dotenv.config();
-console.log('User Controller Loaded')
-console.log("User Model:", User);
-console.log("User Methods:", User ? Object.keys(User) : "User is undefined");
+
 
 // REGISTER a new user
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
   console.log(`new user: ${email}  ${password}`)
   try {
-    console.log('User=', User)
     // Check if the user already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
@@ -40,8 +37,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     res.status(201).json({ user: newUser, token });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error creating user" });
+     res.status(500).json({ message: "Error creating user" });
   }
 };
 
@@ -63,14 +59,73 @@ export const login = async (req: Request, res: Response): Promise<void> => {
        return;
     }
 
-    // Generate JWT token
-    const secretKey = process.env.JWT_SECRET_KEY!;
-    const token = jwt.sign({ email }, secretKey, { expiresIn: "1h" });
 
-    res.json({ token });
+   
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "Login error" });
   }
 };
 
+// GET /users
+export const getAllUsers = async (_req: Request, res: Response) => {
+  try {
+    const users = await User.findAll({
+      attributes: { exclude: ['password'] }
+    });
+    res.json(users);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// GET /Users/:id
+export const getUserById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] }
+    });
+    if (user) {
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+// PUT /Users/:id
+export const updateUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { email, password } = req.body;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      user.email = email;
+      user.password = password;
+      await user.save();
+      res.json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// DELETE /Users/:id
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const user = await User.findByPk(id);
+    if (user) {
+      await user.destroy();
+      res.json({ message: 'User deleted' });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

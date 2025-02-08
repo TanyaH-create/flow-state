@@ -1,7 +1,7 @@
 // MainPage.tsx 
 import { useState } from "react";
 import LoginModal from "../components/LoginModal";
-
+import logo from "../assets/images/logo.png"
 
 function MainPage () {
   //toggle between registration and login form in same modal
@@ -15,7 +15,7 @@ function MainPage () {
     <>
      <main className="main-container d-flex">
       <div className='left-side p-5'>
-         <img src="/images/logo.png" alt="Flow State Logo" className="logo" />
+         <img src= { logo }  alt="logo" className="logo" />
       </div>
       <div className="right-side p-5">
         <div className="login-container">
