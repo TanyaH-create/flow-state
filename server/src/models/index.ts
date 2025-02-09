@@ -1,10 +1,12 @@
-import { Sequelize } from 'sequelize';
+//import { Sequelize } from 'sequelize';
+import sequelize from '../config/connection.js';
 import { UserFactory, User } from './user.js';
 import { TaskFactory,Task } from './tasks.js';
 import { BadgeFactory, Badge } from './badge.js';
 import { UserBadgeFactory, UserBadge } from './userBadge.js';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 
+/*
 dotenv.config();
 
 
@@ -23,7 +25,7 @@ const sequelize = process.env.DB_URL
       }
     );
 
-
+*/
 UserFactory(sequelize);
 TaskFactory(sequelize);
 BadgeFactory(sequelize);
