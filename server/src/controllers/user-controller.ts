@@ -38,15 +38,15 @@ export const login = async (req: Request, res: Response): Promise<void> => {
   
   try {
     const user = await User.findOne({ where: { email } });
-    
+   
     if (!user) {
       res.status(401).json({ message: "Authentication failed - no user" });
       return;
     }
-
+  
     // Check password
      const passwordIsValid = await bcrypt.compare(password.trim(), user.password);
-     console.log(`Is Password Valid: ${passwordIsValid}`)
+     
      if (!passwordIsValid) {
        res.status(401).json({ message: "Authentication failed - not valid" });
        return;
@@ -57,13 +57,37 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
       expiresIn: "1h",
     });
-    console.log('token generated', token)
-    console.log(typeof token)
+    
     res.status(200).json({ token }); // Send token to the client
   } catch (error) {
     res.status(500).json({ message: "Login error" });
   }
 };
+
+// Reset password (No email required)
+export const resetPassword = async (req: Request, res: Response): Promise<void> => {
+  const { email, newPassword } = req.body;
+  
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+       res.status(404).json({ message: "User not found" });
+       return;
+    }
+    user.password=newPassword
+    await user.save();
+    
+    res.json({ message: "Password reset successful! You can now log in with your new password." });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred. Please try again." });
+  }
+};
+
+
+
+
+//for debugging use
 
 // GET /users
 export const getAllUsers = async (_req: Request, res: Response) => {
