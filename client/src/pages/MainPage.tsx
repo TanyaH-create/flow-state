@@ -5,6 +5,8 @@ import LoginModal from "../components/LoginModal";
 import logo from "../assets/images/Logo.png"
 import AuthService from "../utils/authService"; // Import AuthService to check token
 
+
+
 function MainPage () {
   //toggle between registration and login form in same modal
   const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
@@ -26,12 +28,18 @@ function MainPage () {
 
   //ZEN GARDEN
   // Fetch Zen quote
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001";
+
   useEffect(() => {
     const fetchZenQuote = async () => {
       try {
-        //change http://localhost:5000  to render URL
-        const response = await fetch("http://localhost:3001/zen-quote"); // Make request to your backend
+        console.log("Fetching from:", `${API_BASE_URL}/zen-quote`);
+        const response = await fetch(`${API_BASE_URL}/zen-quote`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
         const data = await response.json();
+        console.log("Fetched Zen Quote:", data);
         if (data && data[0]) {
           setZenQuote(data[0].q);
           setAuthor(data[0].a);
@@ -45,7 +53,6 @@ function MainPage () {
   
     fetchZenQuote();
   }, []);
-
 
   const handleLoginSuccess = () => {
     // After a successful login, navigate to the dashboard
