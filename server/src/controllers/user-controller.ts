@@ -35,10 +35,10 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 // LOGIN an existing user
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { email, password } = req.body;
-  console.log(`Trying to Login in: ${email} ${password}`)
+  
   try {
     const user = await User.findOne({ where: { email } });
-    console.log('trying to find user', user)
+    
     if (!user) {
       res.status(401).json({ message: "Authentication failed - no user" });
       return;
@@ -46,6 +46,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     // Check password
      const passwordIsValid = await bcrypt.compare(password.trim(), user.password);
+     console.log(`Is Password Valid: ${passwordIsValid}`)
      if (!passwordIsValid) {
        res.status(401).json({ message: "Authentication failed - not valid" });
        return;
@@ -56,6 +57,8 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     const token = jwt.sign({ id: user.id, email: user.email }, secretKey, {
       expiresIn: "1h",
     });
+    console.log('token generated', token)
+    console.log(typeof token)
     res.status(200).json({ token }); // Send token to the client
   } catch (error) {
     res.status(500).json({ message: "Login error" });

@@ -1,6 +1,7 @@
 import { User } from "../interfaces/User";
 
 
+
 interface LoginResponse {
   token: string;
 }
@@ -14,18 +15,18 @@ const login = async (userInfo: User): Promise<LoginResponse | null> => {
       },
       body: JSON.stringify(userInfo), // send user credentials
     });
-
+    
     if (!response.ok) {
       throw new Error('Login failed: Invalid credentials or server error');
     }
     
     //if login is successful, a new token will be sent in the response
     const data: LoginResponse = await response.json();
-    console.log(`Login fetch request response: ${data}`)
+    console.log(`response from server, token:`, data)
     // Check if a token is present in the response
     if (data.token) {
       // Store token in localStorage
-      localStorage.setItem('token', data.token);
+            localStorage.setItem('token', data.token);
       return data; // Return the login response containing the token
     } else {
       console.error('Token not found in the response');

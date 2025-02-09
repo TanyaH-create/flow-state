@@ -17,8 +17,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) 
       if (isLoginMode) {
         // Use login function from authAPI.tsx
         const data = await login({email, password});
-        console.log(`Login Mode: ${email}  ${password}`)
-        if (data && data.token) {
+         if (data && data.token) {
           localStorage.setItem("token", data.token);
           onLoginSuccess(); //Navigate to the dahsboard page
         } else {
