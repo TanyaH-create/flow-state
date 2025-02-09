@@ -81,7 +81,10 @@ function MainPage () {
       </div>
       <div className="right-side p-5">
         <div className="login-container">
-        <h2>{isLoginMode ? "Welcome Back!" : "Create an Account"}</h2>
+        <h2>
+            {isResetPasswordMode ? "Reset Password" : 
+            isLoginMode ? "Welcome Back!" : "Create an Account"}
+          </h2>
 
         {/* Conditionally render Login, Register, or Reset Password */}
           {isResetPasswordMode ? (

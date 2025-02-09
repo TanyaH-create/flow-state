@@ -30,8 +30,7 @@ const ResetPassword: React.FC<ResetPasswordProps> = ({ onCancel }) => {
 
   return (
     <form onSubmit={handleReset}>
-      <h2>Reset Password</h2>
-      <div className="mb-3">
+        <div className="mb-3">
         <label>Email</label>
         <input
           type="email"
