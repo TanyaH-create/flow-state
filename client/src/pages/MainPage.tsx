@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
-import logo from "../assets/images/logo.png"
+import logo from "../assets/images/Logo.png"
 import AuthService from "../utils/authService"; // Import AuthService to check token
 
 function MainPage () {
