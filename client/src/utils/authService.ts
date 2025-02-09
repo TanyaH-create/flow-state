@@ -1,3 +1,4 @@
+//client/src/utils.auth.ts
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 class AuthService {
@@ -59,9 +60,16 @@ class AuthService {
   }
 
   logout() {
-    // TODO: remove the token from localStorage
+    // to log someone out remove the token from localStorage
     localStorage.removeItem('token'); // Remove token from localStorage
-    // TODO: redirect to the login page
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    const passwordInput = document.getElementById('password') as HTMLInputElement;
+
+    if (emailInput && passwordInput) {
+      emailInput.value = '';  // Clear email field
+      passwordInput.value = '';  // Clear password field
+    }
+    //redirect to the login page
     window.location.href = '/'; // Redirect to main page
   }
 }
