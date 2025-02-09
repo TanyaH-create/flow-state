@@ -72,6 +72,40 @@ body {
   margin-bottom: 200px;
 }
 
+.auth-toggle {
+  font-weight: bold;
+  color: black;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.auth-toggle:hover {
+  color: black;
+  text-decoration: underline;
+}
+
+.btn-gray {
+  font-weight: bold;
+  color: white;
+  background-color: gray;
+  border: none;
+  padding: 12px 24px; /* Wider button */
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  width: 100%; /* Make it full-width inside form */
+  max-width: 300px; /* Limit maximum width */
+  text-align: center;
+  display: block;
+  margin: 10px auto; /* Center the button */
+}
+
+.btn-gray:hover {
+  background-color: darkgray;
+  transform: scale(1.05);
+}
+
+
 
 .logo {
   max-width: 100%;

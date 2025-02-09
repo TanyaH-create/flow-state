@@ -11,8 +11,7 @@ function MainPage () {
   //toggle between registration and login form in same modal
   const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
 
-  //state for affirmation API
-  //const [affirmation, setAffirmation] = useState<string | null>(null);
+  //states for Quote API
   const [zenQuote, setZenQuote] = useState<string | null>(null);
   const [author, setAuthor] = useState<string | null>(null);
   const [authorImage, setAuthorImage] = useState<string | null>(null);
@@ -74,9 +73,12 @@ function MainPage () {
         <div className="login-container">
         <h2>{isLoginMode ? "Welcome Back!" : "Create an Account"}</h2>
             <LoginModal isLoginMode={isLoginMode} onLoginSuccess={handleLoginSuccess}/>
-            <p onClick={toggleMode} style={{ cursor: "pointer" }}>
-              {isLoginMode ? "Don't have an account? Register here" : "Already have an account? Login here"}
-            </p>
+            <p>
+               {isLoginMode ? "Don't have an account? " : "Already have an account? "}
+               <span className="auth-toggle" onClick={toggleMode}>
+                  {isLoginMode ? "Register Here" : "Login Here"}
+               </span>
+</p>
         </div>
 
           {/* Display Zen quote */}
@@ -88,16 +90,8 @@ function MainPage () {
               {authorImage && <img src={authorImage} alt={author ? author: "Zen author"} className="author-image" />}
             </div>
           )}
-    {/* Display affirmation
-        
-        {affirmation && (
-          <div className="affirmation-box mt-4">
-            <h3>Today's Affirmation</h3>
-            <p>{affirmation}</p>
-        </div>
-        )}  
 
-      */}
+     
       {/* Attribution */}
       <footer className="quote-attribution">
         Inspirational quotes provided by{" "}
