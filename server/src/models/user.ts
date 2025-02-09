@@ -7,7 +7,7 @@ interface UserAttributes {
   id: number;
   email: string;
   password: string;
-  rank: number;
+  rank: number; 
 }
 
 //rank and id are optional when creating new user
