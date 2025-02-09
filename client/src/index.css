@@ -69,7 +69,7 @@ body {
 }
 
 .login-container {
-  margin-bottom: 400px;
+  margin-bottom: 200px;
 }
 
 
@@ -78,4 +78,9 @@ body {
   height: auto;
 }
 
+.zen-quote-box {
+  margin-top: 0px;  
+  margin-bottom: 50px;
+  padding-top: 10px; /* add space above */
 
+}
