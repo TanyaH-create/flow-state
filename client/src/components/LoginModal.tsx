@@ -5,11 +5,13 @@ import React,  { useState } from "react";
 interface LoginModalProps {
   isLoginMode: boolean;
   onLoginSuccess: ()=> void; //callback for a successful login
+  onForgotPassword: ()=> void; //callback for forgot password
 }
 
-const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) => {
+const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess, onForgotPassword }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  
   
   const handleLoginOrRegister = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +22,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) 
          if (data && data.token) {
           localStorage.setItem("token", data.token);
           onLoginSuccess(); //Navigate to the dahsboard page
+          setEmail(""); //clear the input fields
+          setPassword("");
         } else {
           alert("Login failed");
         }
@@ -36,6 +40,8 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) 
         }
 
         alert("Registration successful! Please log in.");
+        setEmail(""); //clear the input fields
+        setPassword("");
       }
     } catch (err) {
       console.error("Error:", err);
@@ -65,9 +71,19 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess }) 
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn btn-gray">
         {isLoginMode ? "Sign In" : "Submit" }
       </button>
+      {isLoginMode && (
+        <p>
+          <a href="#" onClick={onForgotPassword}>
+            Forgot Password?
+          </a>
+        </p>
+      )}
+
+
+
     </form>
   );
 };

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
+import ResetPassword from "./ResetPassword";
 import logo from "../assets/images/Logo.png"
 import AuthService from "../utils/authService"; // Import AuthService to check token
 
@@ -10,9 +11,10 @@ import AuthService from "../utils/authService"; // Import AuthService to check t
 function MainPage () {
   //toggle between registration and login form in same modal
   const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
+  // State for reset password form visibility
+  const [isResetPasswordMode, setIsResetPasswordMode] = useState<boolean>(false);
 
-  //state for affirmation API
-  //const [affirmation, setAffirmation] = useState<string | null>(null);
+  //states for Quote API
   const [zenQuote, setZenQuote] = useState<string | null>(null);
   const [author, setAuthor] = useState<string | null>(null);
   const [authorImage, setAuthorImage] = useState<string | null>(null);
@@ -64,6 +66,13 @@ function MainPage () {
     setIsLoginMode(!isLoginMode)
   };
 
+  const handleForgotPasswordClick = () => {
+    setIsLoginMode(false); // Switch to register mode (if needed)
+    setIsResetPasswordMode(true); // Show the reset password form
+  };
+
+
+
   return (
     <>
      <main className="main-container d-flex">
@@ -72,11 +81,27 @@ function MainPage () {
       </div>
       <div className="right-side p-5">
         <div className="login-container">
-        <h2>{isLoginMode ? "Welcome Back!" : "Create an Account"}</h2>
-            <LoginModal isLoginMode={isLoginMode} onLoginSuccess={handleLoginSuccess}/>
-            <p onClick={toggleMode} style={{ cursor: "pointer" }}>
-              {isLoginMode ? "Don't have an account? Register here" : "Already have an account? Login here"}
-            </p>
+        <h2>
+            {isResetPasswordMode ? "Reset Password" : 
+            isLoginMode ? "Welcome Back!" : "Create an Account"}
+          </h2>
+
+        {/* Conditionally render Login, Register, or Reset Password */}
+          {isResetPasswordMode ? (
+            <ResetPassword onCancel={() => setIsResetPasswordMode(false)} />
+          ) : (
+            <LoginModal
+              isLoginMode={isLoginMode}
+              onLoginSuccess={handleLoginSuccess}
+              onForgotPassword={handleForgotPasswordClick}
+            />
+          )}
+          <p>
+               {isLoginMode ? "Don't have an account? " : "Already have an account? "}
+               <span className="auth-toggle" onClick={toggleMode}>
+                  {isLoginMode ? "Register Here" : "Login Here"}
+               </span>            
+         </p>
         </div>
 
           {/* Display Zen quote */}
@@ -88,16 +113,8 @@ function MainPage () {
               {authorImage && <img src={authorImage} alt={author ? author: "Zen author"} className="author-image" />}
             </div>
           )}
-    {/* Display affirmation
-        
-        {affirmation && (
-          <div className="affirmation-box mt-4">
-            <h3>Today's Affirmation</h3>
-            <p>{affirmation}</p>
-        </div>
-        )}  
 
-      */}
+     
       {/* Attribution */}
       <footer className="quote-attribution">
         Inspirational quotes provided by{" "}
