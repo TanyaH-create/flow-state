@@ -50,4 +50,14 @@ Badge.belongsToMany(User, {
     onDelete: 'CASCADE',
 });
 
+
+// Sync database with models (apply changes to schema)
+sequelize.sync({ alter: true })
+  .then(() => {
+    console.log('Database synchronized');
+  })
+  .catch((err) => {
+    console.error('Error synchronizing database:', err);
+  });
+
 export { sequelize, User, Task, Badge, UserBadge };
