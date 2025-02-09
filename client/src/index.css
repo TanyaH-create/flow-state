@@ -84,3 +84,63 @@ body {
   padding-top: 10px; /* add space above */
 
 }
+
+
+/* Responsive styles for devices with small screens */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column; /* Stack left and right side on smaller screens */
+  }
+
+  .left-side {
+    flex: 0 0 100%; /* Takes full width on smaller screens */
+    padding: 15px;
+  }
+
+  .right-side {
+    flex: 0 0 100%; /* Takes full width on smaller screens */
+    padding: 15px;
+  }
+
+  .login-container {
+    margin-bottom: 0px; /* Adjust spacing for smaller screens */
+  }
+
+  footer.quote-attribution {
+    font-size: 0.8rem;
+  }
+
+  /* Adjust zen quote box styling */
+  .zen-quote-box {
+    padding: 20px;
+    text-align: center;
+  }
+
+  /* Adjust text size and alignment for mobile view */
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+}
+
+/* Additional styles for very small screens (phones in portrait mode) */
+@media (max-width: 480px) {
+  .logo {
+    max-width: 90%;
+  }
+
+  .login-container {
+    margin-bottom: 0px; /* More spacing for smaller phones */
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+}
