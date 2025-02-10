@@ -1,15 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import { User } from "../models/user";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config(); // load environment variables
-
-declare module "express-serve-static-core" {
-  interface Request {
-    user?: User;
-  }
-}
 
 // Extend Express Request type to include `user`
 interface AuthenticatedRequest extends Request {

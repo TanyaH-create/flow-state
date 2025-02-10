@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/authService.ts';
-import ProgressTracker from '../components/ProgressTracker.tsx';
-import TaskList from '../components/TaskList';
-import AddTaskButton from '../components/AddTaskButton.tsx';
+// import ProgressTracker from '../components/ProgressTracker.tsx';
+// import TaskList from '../components/TaskList';
+// import AddTaskButton from '../components/AddTaskButton.tsx';
 
 const DashPage = () => {
   console.log('DashPage')  
   
   const navigate = useNavigate(); // to navigate programmatically
   const [message, setMessage] = useState<string>('');
-  const [tasks, setTasks] = useState<any[]>([]); // Store user tasks
+  // const [tasks, setTasks] = useState<any[]>([]); // Store user tasks
 
   useEffect(() => {
     // Check if the user is logged in (by checking token validity)
@@ -34,7 +34,7 @@ const DashPage = () => {
       })
       .then((data) => {
         setMessage(data.message); // Display server message
-        setTasks(data.tasks || []); // Store fetched tasks
+        // setTasks(data.tasks || []); // Store fetched tasks
       })
       .catch((error) => {
         console.error(error);
@@ -52,9 +52,11 @@ const DashPage = () => {
     <div>
       <h1>Dashboard</h1>
       <p>{message}</p> {/* Dashboard message */}
-      <ProgressTracker tasks={tasks} />
-      <TaskList tasks={tasks} />
-      <AddTaskButton setTasks={setTasks} />
+      {
+      // <ProgressTracker tasks={tasks} />
+      // <TaskList tasks={tasks} />
+      // <AddTaskButton setTasks={setTasks} />
+      }
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
