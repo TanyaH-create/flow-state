@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/authService.ts';
-// import ProgressTracker from '../components/ProgressTracker.tsx';
-// import TaskList from '../components/TaskList';
-// import AddTaskButton from '../components/AddTaskButton.tsx';
+import TaskList from '../components/TaskList';
+import AddTaskButton from '../components/AddTaskButton.tsx';
 
 const DashPage = () => {
   console.log('DashPage')  
   
   const navigate = useNavigate(); // to navigate programmatically
+  const [tasks, setTasks] = useState<any[]>([]);
   const [message, setMessage] = useState<string>('');
   // const [tasks, setTasks] = useState<any[]>([]); // Store user tasks
 
@@ -33,8 +33,8 @@ const DashPage = () => {
         throw new Error("Access Denied");
       })
       .then((data) => {
+        setTasks(data.tasks || []); // Store fetched tasks
         setMessage(data.message); // Display server message
-        // setTasks(data.tasks || []); // Store fetched tasks
       })
       .catch((error) => {
         console.error(error);
@@ -49,15 +49,13 @@ const DashPage = () => {
   };
   
   return (
-    <div>
-      <h1>Dashboard</h1>
-      <p>{message}</p> {/* Dashboard message */}
-      {
-      // <ProgressTracker tasks={tasks} />
-      // <TaskList tasks={tasks} />
-      // <AddTaskButton setTasks={setTasks} />
-      }
-      <button onClick={handleLogout}>Logout</button>
+    <div className="p-6 bg-light text-dark min-h-screen flex flex-col items-center">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <button onClick={handleLogout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
+      <div className="mt-6 w-full max-w-3xl">
+        <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
+        <TaskList tasks={tasks} />
+      </div>
     </div>
   );
 };
