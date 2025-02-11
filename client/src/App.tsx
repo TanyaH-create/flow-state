@@ -1,10 +1,13 @@
+import { Outlet } from "react-router-dom"
 
 
 function App() {
   return (
-    <div>
-      <h1>Welcome To Flow State</h1>
-    </div>
+    <>
+      <main>
+        <Outlet />
+      </main>
+    </>
   )
 }
 

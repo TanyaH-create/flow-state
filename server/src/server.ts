@@ -1,38 +1,38 @@
 
-//server.ts is the main entry point for the Node.js and express application
-//used to load environment variables (like API keys)
-
-//express is the framework for handling HTTP requests and responses
+//server.ts 
 import express from 'express';
-
-// TODO: Create Sequelize connector from models folder and import 
-// in to connect to postgres server. 
-//manages databse connection
-import sequelize from './config/connection.js';
-
-//application route handlers
+import { sequelize } from './models/index.js';
 import routes from './routes/index.js';
 
-//express is the framework for handling HTTP requests and responses
-const app = express();
 
-//use port defined in environment variables or 3001 if not defined
+const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Serves static files in the entire client's dist folder
+
 app.use(express.static('../client/dist'));
-
-//Middlewares:
-//handle JSON data
-app.use(express.json());
-//turn on routes: mounts all defined routes imported from 
-//routes (.routes/index.js) so the server can handle API endpoints
-app.use(routes);
+app.use(express.json()); //parse all JSON request boodies
+app.use(routes); //mount all API endpoints from routes
 
 
-//connect to postgres server
+
+// Create an endpoint to fetch the Zen quote
+app.get("/zen-quote", async (_req, res) => {
+  try {
+    const response = await fetch("https://zenquotes.io/api/quotes/");
+    const data = await response.json();
+    res.json(data); // Send the fetched quote data back to the frontend
+  } catch (error) {
+    console.error("Error fetching Zen quote:", error);
+    res.status(500).json({ error: "Failed to fetch Zen quote" });
+  }
+});
+
+
+
+
+//.sync connects postgres database to server before starting the server
 sequelize.sync().then(() => {
   app.listen(PORT, () => {
-    console.log(`Server is listening on port ${PORT}`);
+  console.log(`Server is listening on port ${PORT}`);
   });
 });
