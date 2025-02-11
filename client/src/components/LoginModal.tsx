@@ -21,6 +21,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess, on
         const data = await login({email, password});
          if (data && data.token) {
           localStorage.setItem("token", data.token);
+          console.log('HANDLE LOGIN SUCCESS')
           onLoginSuccess(); //Navigate to the dahsboard page
           setEmail(""); //clear the input fields
           setPassword("");

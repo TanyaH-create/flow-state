@@ -8,8 +8,8 @@ const DashPage = () => {
   console.log('DashPage')  
   
   const navigate = useNavigate(); // to navigate programmatically
-  const [tasks, setTasks] = useState<any[]>([]);
-  const [message, setMessage] = useState<string>('');
+  const [tasks, setTasks] = useState<[]>([]);
+ // const [message, setMessage] = useState<string>('');
   // const [tasks, setTasks] = useState<any[]>([]); // Store user tasks
 
   useEffect(() => {
@@ -18,10 +18,10 @@ const DashPage = () => {
       navigate("/"); // Redirect to home if not logged in
       return;
     }
-
+    console.log('User is logged in')
     // If logged in, fetch dashboard data
     const token = AuthService.getToken();
-
+    
     fetch("api/auth/dash", {
       method: "GET",
       headers: {
@@ -29,17 +29,19 @@ const DashPage = () => {
       },
     })
       .then((response) => {
+        console.log(response.json)
         if (response.ok) return response.json();
+        console.log('THROWING ERROR')
         throw new Error("Access Denied");
       })
       .then((data) => {
+        console.log('Fetched Data:', data);
         setTasks(data.tasks || []); // Store fetched tasks
-        setMessage(data.message); // Display server message
       })
       .catch((error) => {
-        console.error(error);
+        console.log("ERROR THROWN ON FETCH", error);
         AuthService.logout();
-        setMessage("Failed to load dashboard. You have been logged out.");
+    //    setMessage("Failed to load dashboard. You have been logged out.");
         navigate("/"); // Redirect after logout
       });
   }, [navigate]); // Runs only on component mount
@@ -54,7 +56,7 @@ const DashPage = () => {
       <button onClick={handleLogout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
       <div className="mt-6 w-full max-w-3xl">
         <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
-        <TaskList tasks={tasks} />
+        <TaskList initialTasks={tasks} />
       </div>
     </div>
   );

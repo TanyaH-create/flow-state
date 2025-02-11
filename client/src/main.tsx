@@ -9,6 +9,7 @@ import ErrorPage from './pages/ErrorPage.tsx';
 import MainPage from './pages/MainPage.tsx'
 import DashPage from './pages/DashPage.tsx'
 
+console.log('Running MAIN.tsx')
 const router = createBrowserRouter([
   {
     path: '/',                 //root route
