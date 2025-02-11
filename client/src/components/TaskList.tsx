@@ -9,8 +9,15 @@ interface Task {
   isComplete: boolean;
 }
 
-const TaskList: React.FC = () => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+interface TaskListProps {
+    tasks: any[];
+}
+interface TaskListProps {
+    tasks: any[];
+  }
+  
+const TaskList: React.FC<TaskListProps> = ({ tasks: initialTasks }) => {
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
   useEffect(() => {
     fetch("/api/auth/dash")
