@@ -22,22 +22,21 @@ const router = Router();
 // });
 
 // GET /api/auth/dash - Fetch user tasks and progress
-router.get("/dash", authenticateToken, async (req: AuthenticatedRequest, res: Response) => {
+ router.get("/dash", authenticateToken, async (req: AuthenticatedRequest, res: Response) => {
   try {
-    const userId = (req as any).user.id; // Extract user ID from authenticated request
-    
-    // Fetch tasks for the logged-in user
-    const tasks = await Task.findAll({ where: { userId } });
-    
+     console.log('GET DASH REQUEST STARTED')
+     const userId = (req as any).user.id; // Extract user ID from authenticated request
+     // Fetch tasks for the logged-in user
+    const tasks = await Task.findAll({ where: { userId } }) || [];  //return empty array if no user
+    console.log('TASKS ARRAY:', tasks)
     // Calculate progress (each completed task = 20%)
     const completedTasks = tasks.filter(task => task.isComplete).length;
     const progress = Math.min(completedTasks * 20, 100); // Cap at 100%
-
+    console.log(`tasks: ${tasks} Progress: ${progress}`)
     res.json({ tasks, progress });
   } catch (error) {
-    console.error("Error fetching dashboard data:", error);
     res.status(500).json({ message: "Server error fetching dashboard data" });
-  }
-});
+  } 
+});  
 
 export default router;

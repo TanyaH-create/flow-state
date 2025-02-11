@@ -5,7 +5,6 @@ class AuthService {
   getProfile() {
     // TODO: return the decoded token
     const token = this.getToken();
-    console.log('Token retrieved for profile', token)
     if (token) {
       return jwtDecode<JwtPayload>(token); // Decode the token and return the payload
     }
@@ -13,9 +12,8 @@ class AuthService {
   }
 
   loggedIn() {
-    // TODO: return a value that indicates if the user is logged in
+    //return a value that indicates if the user is logged in
     const token = this.getToken();
-    console.log('Token retrieved for login', token)
     if (token) {
       if (this.isTokenExpired(token)) {
         //log user out if token expires
@@ -45,17 +43,16 @@ class AuthService {
   }
 
   getToken(): string {
-    // TODO: return the token
+    // return the token
     const storedToken =  localStorage.getItem('token') || '';
-    console.log(`The token is ${storedToken}`);
     return storedToken;
     }
 
   login(idToken: string) {
-    // TODO: set the token to localStorage
+    //  set the token to localStorage
     localStorage.setItem('token', idToken); // Store token in localStorage
     
-    // TODO: redirect to the home page
+    //  redirect to the home page
     window.location.href = '/'; // Redirect to the home page 
   }
 

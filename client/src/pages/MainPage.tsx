@@ -24,6 +24,7 @@ function MainPage () {
   useEffect(() => {
     // If the user is already logged in, redirect to the dashboard
     if (AuthService.loggedIn()) {
+      console.log('Already logged in')
       navigate("/dash");
     }
   }, [navigate]);
@@ -59,6 +60,7 @@ function MainPage () {
 
   const handleLoginSuccess = () => {
     // After a successful login, navigate to the dashboard
+    console.log('Change to the Dash Page')
     navigate("/dash");
   };
   
