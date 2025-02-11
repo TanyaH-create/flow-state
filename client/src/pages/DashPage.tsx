@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/authService.ts';
 import TaskList from '../components/TaskList';
 import AddTaskButton from '../components/AddTaskButton.tsx';
+import NavBar from '../components/NavBar'; // Import NavBar
 
 const DashPage = () => {
   console.log('DashPage Renderinng')  
@@ -57,27 +58,29 @@ const DashPage = () => {
       });
   }, [navigate]); // Runs only on component mount
 
-  const handleLogout = () => {
-    AuthService.logout(); // Log out the user when the logout button is clicked
-  };
 
-return (
-<main className="main-container d-flex">
-      {/* Left Side */}
-      <div className='left-side p-5'>
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <button onClick={handleLogout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
-      </div>
-      
-      {/* Right Side */}
-      <div className="right-side p-5">
-        <div className="task-container">
-          <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
-          <TaskList initialTasks={tasks} />
+
+  return (
+    <main className="container-fluid d-flex flex-column min-vh-100">
+      {/* Navigation Bar */}
+      <NavBar />
+            
+      <div className="d-flex flex-grow-1">
+        {/* Left Side */}
+        <div className='left-side p-5 w-50'>
+          <h2 className="h5">ADD BADGE SECTION ON THIS SIDE</h2>
+        </div>
+        
+        {/* Right Side */}
+        <div className="right-side p-5 w-50">
+          <div className="task-container">
+            <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
+            <TaskList initialTasks={tasks} />
+          </div>
         </div>
       </div>
     </main>
- ); 
+  ); 
 };
 
 

@@ -1,6 +1,7 @@
+//TaskList.tsx
 import React, { useEffect, useState } from "react";
 import TaskItem from "./TaskItem";
-import AddTaskButton from "./AddTaskButton";
+//import AddTaskButton from "./AddTaskButton";
 
 
 interface Task {
@@ -39,9 +40,11 @@ const TaskList: React.FC<TaskListProps> = ({ initialTasks = []}) => {
     );
   };
   const taskData = tasks ||  [];
+
   return (
-    <div className="space-y-4 bg-light text-dark p-4 rounded-md shadow-md">
-      <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
+    <div>
+      { /* <div "space-y-4 bg-light text-dark p-4 rounded-md shadow-md"> */ }
+      { /* <AddTaskButton onAddTask={() => console.log("Open add task modal")} /> */ }
        {taskData.map((task) => (
         <TaskItem key={task.id} task={task} onToggleComplete={toggleTaskCompletion} />
       ))} 
