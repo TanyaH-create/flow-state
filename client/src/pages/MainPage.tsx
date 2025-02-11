@@ -6,8 +6,6 @@ import ResetPassword from "./ResetPassword";
 import logo from "../assets/images/Logo.png"
 import AuthService from "../utils/authService"; // Import AuthService to check token
 
-
-
 function MainPage () {
   //toggle between registration and login form in same modal
   const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
@@ -17,7 +15,7 @@ function MainPage () {
   //states for Quote API
   const [zenQuote, setZenQuote] = useState<string | null>(null);
   const [author, setAuthor] = useState<string | null>(null);
-  const [authorImage, setAuthorImage] = useState<string | null>(null);
+  //const [authorDate, setAuthorDate] = useState<string | null>(null);
 
   const navigate = useNavigate() as (path:string) => void;  //to navigate to the dashboard upon login
 
@@ -37,17 +35,16 @@ function MainPage () {
   useEffect(() => {
     const fetchZenQuote = async () => {
       try {
-        console.log("Fetching from:", `${API_BASE_URL}/zen-quote`);
+        console.log("MAin Page Fetching qote from:", `${API_BASE_URL}/zen-quote`);
         const response = await fetch(`${API_BASE_URL}/zen-quote`);
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("Fetched Zen Quote:", data);
-        if (data && data[0]) {
-          setZenQuote(data[0].q);
-          setAuthor(data[0].a);
-          setAuthorImage(data[0].i);
+        console.log("Main Page Fetched Zen Quote:", data);
+        if (data) {
+          setZenQuote(data.quote);
+          setAuthor(data.author);
         }
       } catch (error) {
         console.error("Error fetching Zen quote:", error);
@@ -109,10 +106,10 @@ function MainPage () {
           {/* Display Zen quote */}
           {zenQuote && (
             <div className="zen-quote-box mt-4">
-              <h3>Zen Quote of the Moment</h3>
+              <h3>Zen Quote of the Day</h3>
               <p>"{zenQuote}"</p>
               {author && <p>- {author}</p>}
-              {authorImage && <img src={authorImage} alt={author ? author: "Zen author"} className="author-image" />}
+           {/*   {authorImage && <img src={authorImage} alt={author ? author: "Zen author"} className="author-image" />} */}
             </div>
           )}
 
