@@ -1,3 +1,5 @@
+//DashPage.tsx
+
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '../utils/authService.ts';
@@ -5,10 +7,20 @@ import TaskList from '../components/TaskList';
 import AddTaskButton from '../components/AddTaskButton.tsx';
 
 const DashPage = () => {
-  console.log('DashPage')  
+  console.log('DashPage Renderinng')  
+
+  // TLH 2/11/25 - set up type
+  interface Task {
+    id: number;
+    title: string;
+    description: string;
+    isComplete: boolean;
+  }
+  
   
   const navigate = useNavigate(); // to navigate programmatically
-  const [tasks, setTasks] = useState<[]>([]);
+  // TLH 2/11/25 - add type Task
+  const [tasks, setTasks] = useState<Task[]>([]);
  // const [message, setMessage] = useState<string>('');
   // const [tasks, setTasks] = useState<any[]>([]); // Store user tasks
 
@@ -29,9 +41,8 @@ const DashPage = () => {
       },
     })
       .then((response) => {
-        console.log(response.json)
         if (response.ok) return response.json();
-        console.log('THROWING ERROR')
+        console.log('DashPage authenticate error')
         throw new Error("Access Denied");
       })
       .then((data) => {
@@ -39,7 +50,7 @@ const DashPage = () => {
         setTasks(data.tasks || []); // Store fetched tasks
       })
       .catch((error) => {
-        console.log("ERROR THROWN ON FETCH", error);
+        console.log("DashPAge catch error", error);
         AuthService.logout();
     //    setMessage("Failed to load dashboard. You have been logged out.");
         navigate("/"); // Redirect after logout
