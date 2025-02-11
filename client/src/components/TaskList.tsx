@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import TaskItem from "./TaskItem";
 import AddTaskButton from "./AddTaskButton";
 
+
 interface Task {
   id: number;
   title: string;
@@ -10,13 +11,15 @@ interface Task {
 }
 
 interface TaskListProps {
-  initialTasks?: [];
+  initialTasks?: Task[];   //TLH 2/11/25
 }
-  
-const TaskList: React.FC<TaskListProps> = ({ initialTasks = []}) => {
-  
-  const [tasks, setTasks] = useState<Task[]>(initialTasks || []);
 
+const TaskList: React.FC<TaskListProps> = ({ initialTasks = []}) => {
+  // TLH 2/11/25 - check if undefined (not an array) then initialize as array
+  const [tasks, setTasks] = useState<Task[]>(Array.isArray(initialTasks) ? initialTasks : []);
+  
+
+  
   useEffect(() => {
     fetch("/api/auth/dash")
       .then((res) => res.json())
