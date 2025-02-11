@@ -49,17 +49,25 @@ const DashPage = () => {
   const handleLogout = () => {
     AuthService.logout(); // Log out the user when the logout button is clicked
   };
-  
-  return (
-    <div className="p-6 bg-light text-dark min-h-screen flex flex-col items-center">
-      <h1 className="text-2xl font-bold">Dashboard</h1>
-      <button onClick={handleLogout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
-      <div className="mt-6 w-full max-w-3xl">
-        <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
-        <TaskList initialTasks={tasks} />
+
+return (
+<main className="main-container d-flex">
+      {/* Left Side */}
+      <div className='left-side p-5'>
+        <h1 className="text-2xl font-bold">Dashboard</h1>
+        <button onClick={handleLogout} className="mt-4 bg-red-500 text-white px-4 py-2 rounded">Logout</button>
       </div>
-    </div>
-  );
+      
+      {/* Right Side */}
+      <div className="right-side p-5">
+        <div className="task-container">
+          <AddTaskButton onAddTask={() => console.log("Open add task modal")} />
+          <TaskList initialTasks={tasks} />
+        </div>
+      </div>
+    </main>
+ ); 
 };
+
 
 export default DashPage;
