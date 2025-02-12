@@ -41,6 +41,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isLoginMode, onLoginSuccess, on
         }
 
         alert("Registration successful! Logging you in...");
+        
         setEmail(""); //clear the input fields
         setPassword("");
       }
