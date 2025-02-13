@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../utils/authService";
 import TodoApp from "../components/TodoApp";
 
-const FlowState: React.FC = () => {
+const DashPage: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,4 +25,4 @@ const FlowState: React.FC = () => {
   );
 };
 
-export default FlowState;
+export default DashPage;
