@@ -34,10 +34,14 @@
     "@types/bcrypt": "^5.0.2",
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
+    "classnames": "^2.5.1",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
     "jwt-decode": "^4.0.0",
     "pg": "^8.13.1",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5",
     "sequelize": "^6.37.5"
   }
 }

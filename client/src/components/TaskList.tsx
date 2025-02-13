@@ -1,53 +1,19 @@
-//TaskList.tsx
-import React, { useEffect, useState } from "react";
-import TaskItem from "./TaskItem";
-//import AddTaskButton from "./AddTaskButton";
-
-
-interface Task {
-  id: number;
-  title: string;
-  description: string;
-  isComplete: boolean;
-}
+import React from "react";
+import Task from "./Task";
 
 interface TaskListProps {
-  initialTasks?: Task[];   //TLH 2/11/25
+  tasks: { id: number; name: string; level: number }[];
+  onLevelUp: (id: number) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ initialTasks = []}) => {
-  // TLH 2/11/25 - check if undefined (not an array) then initialize as array
-  const [tasks, setTasks] = useState<Task[]>(Array.isArray(initialTasks) ? initialTasks : []);
-  
-
-  
-  useEffect(() => {
-    fetch("/api/auth/dash")
-      .then((res) => res.json())
-      //.then((data) => setTasks(data.tasks))
-      .then((data) => {
-        console.log("Fetched tasks:", data.tasks);
-        setTasks(Array.isArray(data.tasks) ? data.tasks : []); //check if tasks is undefined, if it is set to empty array
-      })
-      .catch((error) => console.error("Error fetching tasks:", error));
-  }, []);
-
-  const toggleTaskCompletion = (taskId: number) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, isComplete: !task.isComplete } : task
-      )
-    );
-  };
-  const taskData = tasks ||  [];
-
+const TaskList: React.FC<TaskListProps> = ({ tasks, onLevelUp }) => {
   return (
     <div>
-      { /* <div "space-y-4 bg-light text-dark p-4 rounded-md shadow-md"> */ }
-      { /* <AddTaskButton onAddTask={() => console.log("Open add task modal")} /> */ }
-       {taskData.map((task) => (
-        <TaskItem key={task.id} task={task} onToggleComplete={toggleTaskCompletion} />
-      ))} 
+      {tasks.length === 0 ? (
+        <p className="text-gray-500">No tasks yet. Add one!</p>
+      ) : (
+        tasks.map((task) => <Task key={task.id} task={task} onLevelUp={onLevelUp} />)
+      )}
     </div>
   );
 };
