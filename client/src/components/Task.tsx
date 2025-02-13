@@ -42,7 +42,7 @@ const Task: React.FC<TaskProps> = ({ task, onLevelUp }) => {
           +
         </button>
       </div>
-      <ProgressBar progress={(task.level / 50) * 100} />
+      <ProgressBar value={(task.level / 50) * 100} />
       {badge && <div className="mt-2 text-green-600 font-semibold">{badge}</div>}
     </div>
   );

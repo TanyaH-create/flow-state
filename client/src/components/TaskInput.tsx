@@ -1,35 +1,32 @@
-import React from "react";
-
-interface TaskItemProps {
-  task: {
-    id: number;
-    title: string;
-    description: string;
-    isComplete: boolean;
-  };
-  onToggleComplete: (taskId: number) => void;
+interface TaskInputProps {
+  onAddTask: (name: string) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
+const TaskInput: React.FC<TaskInputProps> = ({ onAddTask }) => {
+  const [taskName, setTaskName] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (taskName.trim()) {
+      onAddTask(taskName.trim());
+      setTaskName("");
+    }
+  };
+
   return (
-    <div className="border p-4 rounded-md shadow-md flex justify-between items-center bg-light text-dark">
-      <div>
-        <h3 className={`text-lg font-bold ${task.isComplete ? 'line-through text-gray-400' : ''}`}>
-          {task.title}
-        </h3>
-        <p className="text-sm text-gray-600">{task.description}</p>
-      </div>
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          checked={task.isComplete}
-          onChange={() => onToggleComplete(task.id)}
-          className="w-5 h-5"
-        />
-        <span>{task.isComplete ? "Completed" : "Mark Complete"}</span>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit} className="flex mb-4">
+      <input
+        type="text"
+        value={taskName}
+        onChange={(e) => setTaskName(e.target.value)}
+        placeholder="Add a new task..."
+        className="border p-2 flex-grow rounded-lg"
+      />
+      <button type="submit" className="ml-2 p-2 bg-green-500 text-white rounded">
+        Add
+      </button>
+    </form>
   );
 };
 
-export default TaskItem;
+export default TaskInput;
