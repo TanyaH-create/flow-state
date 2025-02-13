@@ -15,14 +15,14 @@ interface Task {
 const MAX_LEVEL = 50;
 const XP_GAIN = 1.25;
 
-const FlowState: React.FC = () => {
+const DashPage: React.FC = () => {
   const navigate = useNavigate();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState<string>("");
 
   useEffect(() => {
     if (!AuthService.loggedIn()) {
-      navigate("/");
+      navigate("/"); // Redirect to login page if not authenticated
     }
   }, [navigate]);
 
@@ -58,4 +58,4 @@ const FlowState: React.FC = () => {
   );
 };
 
-export default FlowState;
+export default DashPage;

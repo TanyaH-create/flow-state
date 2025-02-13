@@ -1,9 +1,11 @@
+import React, { useState } from "react"; // ✅ Import useState
+
 interface TaskInputProps {
   onAddTask: (name: string) => void;
 }
 
 const TaskInput: React.FC<TaskInputProps> = ({ onAddTask }) => {
-  const [taskName, setTaskName] = useState("");
+  const [taskName, setTaskName] = useState(""); // ✅ Now useState is recognized
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,10 +21,10 @@ const TaskInput: React.FC<TaskInputProps> = ({ onAddTask }) => {
         type="text"
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
-        placeholder="Add a new task..."
-        className="border p-2 flex-grow rounded-lg"
+        placeholder="Add a new task"
+        className="p-2 border rounded w-full"
       />
-      <button type="submit" className="ml-2 p-2 bg-green-500 text-white rounded">
+      <button type="submit" className="ml-2 px-4 py-2 bg-blue-500 text-white rounded">
         Add
       </button>
     </form>

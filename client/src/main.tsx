@@ -1,36 +1,13 @@
-import ReactDOM from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter } from "react-router-dom";
+import App from "./App";
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import './index.css';
 
-import App from './App.tsx';
-import ErrorPage from './pages/ErrorPage.tsx';
-import MainPage from './pages/MainPage.tsx';
-import DashPage from './pages/DashPage.tsx';
-
-console.log('Running MAIN.tsx');
-const router = createBrowserRouter([
-  {
-    path: '/',                 //root route
-    element: <App />,
-    errorElement: <ErrorPage />,
-    children: [
-      {
-        index: true,      // when root is visited, MainPage will load as outlet
-        element: <MainPage />
-      }, 
-      {
-        path: 'dashboard',
-        element: <DashPage />
-      },
-    ]
-  }
-]);
-
-const rootElement = document.getElementById('root');
-if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-    <RouterProvider router={router} />
-  );
-}
+ReactDOM.createRoot(document.getElementById("root")!).render(
+  <BrowserRouter> {/* ✅ Only One Router Here */}
+    <App />
+  </BrowserRouter>
+);
