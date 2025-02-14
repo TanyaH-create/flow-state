@@ -1,0 +1,117 @@
+/* DashPagecss */
+
+.navbar {
+    background: linear-gradient(90deg, rgba(57,208,228,1) 0%, rgba(89,195,196,1) 67%, rgba(49,162,171,1) 100%);
+    /* background: var(--gradient-blue);   */
+    border-top: 10px solid var(--dark); /* Thicker border */
+    border-left: 10px solid var(--dark); /* Thicker border */
+    border-right: 10px solid var(--dark); /* Thicker border */
+    border-bottom: 10px solid var(--dark);
+    color: var(--dark);
+    margin: 0;
+    padding: 1rem;
+    width: 100%;
+  }
+  
+
+.main-container-dash {
+    border-left: 10px solid var(--dark); /* Thicker border */
+    border-right: 10px solid var(--dark); /* Thicker border */
+    border-bottom: 10px solid var(--dark); /* Thicker border */
+}
+
+/* Center title and right-align checkbox */
+.task-item-header {
+  display: flex;
+  justify-content: space-between; /* Aligns the title and checkbox to opposite ends */
+  align-items: center;
+  width: 100%;
+}
+
+/* Flex container for description and sticker with proper alignment */
+.task-item-description {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.task-item-description img {
+  margin-left: 8px; /* Adds a little space between the description and the sticker */
+}
+
+/*  to ensure task description takes available space */
+.task-item-description p {
+  flex-grow: 1;
+}
+
+.task-header {
+   text-align: center;
+   flex-grow: 1; /* Allow the header to take up available space */
+}
+
+.task-header-container {
+    display: flex;
+    align-items: center; /* Vertically align button and header */
+    justify-content: flex-start; /* Aligns both to the left */
+    gap: 10px; /* Adds space between button and header */
+    width: 100%; /* Ensure full width of the container */
+  }
+
+.task-list-container {
+    padding: 16px; /* Same as p-3 in Bootstrap */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column; 
+    
+  }
+
+  .add-task-btn-container {
+    margin-top: auto; /* Pushes button to the bottom */
+  }
+
+  .right-side-dash {
+    border-left: 10px solid var(--dark); /* Thicker border */
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--light);
+    display: flex;
+    
+  }
+  
+  .badge-list-container {
+    
+    padding: 16px; /* Same as p-3 in Bootstrap */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Makes space between tasks and button */
+  }
+
+
+  .left-side-dash {
+    flex: 0 0 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: var(--light);
+  }
+
+  @media (max-width: 768px) {
+    .main-container-dash {
+      flex-direction: column; /* Stack left and right side on smaller screens */
+      border-left: 10px solid var(--dark); /* Thicker border */
+      border-right: 10px solid var(--dark); /* Thicker border */
+      border-bottom: 10px solid var(--dark); /* Thicker border */
+    }
+
+    .right-side-dash {
+      border-left: 0px; /* Thicker border */
+      border-top: 10px solid var(--dark); /* Thicker border */
+    }
+  }

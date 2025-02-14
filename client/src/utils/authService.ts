@@ -3,12 +3,24 @@ import { JwtPayload, jwtDecode } from 'jwt-decode';
 
 class AuthService {
   getProfile() {
-    // TODO: return the decoded token
+    // return the decoded token
     const token = this.getToken();
     if (token) {
       return jwtDecode<JwtPayload>(token); // Decode the token and return the payload
     }
     return null; // If no token, return null
+  }
+
+  decodeToken(token: string | null) {
+    if (!token) return null;
+    try {
+      const decoded =  jwtDecode<{ id: number }>(token); // Ensure userId is present
+      console.log('Decoded in AuthService', decoded);
+      return decoded;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      return null;
+    }
   }
 
   loggedIn() {

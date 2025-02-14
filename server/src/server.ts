@@ -3,7 +3,8 @@
 import express from 'express';
 import { sequelize } from './models/index.js';
 import routes from './routes/index.js';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -16,6 +17,30 @@ const CACHE_EXPIRATION_TIME = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 app.use(express.static('../client/dist'));
 app.use(express.json()); //parse all JSON request boodies
 app.use(routes); //mount all API endpoints from routes
+
+const GIPHY_API_KEY = process.env.GIPHY_KEY;
+const GIPHY_URL='https://api.giphy.com/v1/gifs/search'
+
+app.get('/getSticker', async (_req, res) => {
+  
+  try {
+    const response = await fetch(`${GIPHY_URL}?api_key=${GIPHY_API_KEY}&q=good-job&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`);
+    const data = await response.json();
+
+     if (data.data && data.data.length > 0) {
+        const randomIndex = Math.floor(Math.random() * data.data.length); // Get a random index
+        const stickerUrl = data.data[randomIndex].images.fixed_height_small.url; // Get random sticker
+        return res.json({stickerUrl});
+    } else {
+      return res.status(404).json({ error: 'No sticker found' });
+    }
+  } catch (error) {
+    console.error('Error fetching sticker:', error);
+    return res.status(500).json({ error: 'Failed to fetch sticker from Giphy' });
+  }
+
+});
+
 
 
 // Create an endpoint to fetch the Zen quote
