@@ -21,6 +21,7 @@ const DashPage = () => {
     title: string;
     description: string;
     isComplete: boolean;
+    stickerUrl?: string;
   }
   
   
@@ -47,6 +48,7 @@ const DashPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log('DashPage GET data:', data)
         setTasks(data.tasks || []); // Set tasks (empty if no tasks)
       })
       .catch((error) => {
@@ -58,23 +60,21 @@ const DashPage = () => {
 
   const handleAddTask = (title: string, description: string) => {
     const token = AuthService.getToken();
-    console.log('add task raw token:', token)
-    const decodedToken = AuthService.decodeToken(token);
-    console.log('Decoded Token:', decodedToken);
+ 
     const userId = AuthService.decodeToken(token)?.id; // Decode the token to get the userId
-    console.log('Handle Add Task Decoded Token:', userId)
+  
        if (!userId) {
       console.log("No user ID found");
       return;
     }
 
     console.log('add task token:', token, 'userId:', userId);
-
+    
     fetch('/api/tasks', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
+         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ title, description, userId, isComplete: false }),
     })
