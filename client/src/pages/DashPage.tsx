@@ -15,18 +15,18 @@ import './DashPage.css';
 const DashPage = () => {
   console.log('DashPage Renderinng')  
 
-  // TLH 2/11/25 - set up type
-  interface Task {
-    id: number;
-    title: string;
-    description: string;
-    isComplete: boolean;
-  }
+  // // TLH 2/11/25 - set up type
+  // interface Task {
+  //   id: number;
+  //   title: string;
+  //   description: string;
+  //   isComplete: boolean;
+  // }
   
   
   const navigate = useNavigate(); // to navigate programmatically
   // TLH 2/11/25 - add type Task
-  const [tasks, setTasks] = useState<Task[]>([]);
+  //const [tasks, setTasks] = useState<Task[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
  
   useEffect(() => {
@@ -36,35 +36,34 @@ const DashPage = () => {
       return;
     }
     console.log('User is logged in')
-      // If logged in, fetch dashboard data
-    const token = AuthService.getToken();
+
     
-    fetch("/api/auth/dash", {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${token}`, // Send token in Authorization header
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setTasks(data.tasks || []); // Set tasks (empty if no tasks)
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-        AuthService.logout();
-        navigate("/"); // Redirect to home on error
-      });
+// MOVED TO TASKLIST - If logged in, have TaskList manage it's own state and update with stored data
+    //   const token = AuthService.getToken();
+    // fetch("/api/auth/dash", {
+    //   method: "GET",
+    //   headers: {
+    //     Authorization: `Bearer ${token}`, // Send token in Authorization header
+    //   },
+    // })
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     setTasks(data.tasks || []); // Set tasks (empty if no tasks)
+    //   })
+    //   .catch((error) => {
+    //     console.log("Error:", error);
+    //     AuthService.logout();
+    //     navigate("/"); // Redirect to home on error
+    //   });
+
   }, [navigate]);
 
   const handleAddTask = (title: string, description: string) => {
     const token = AuthService.getToken();
-    console.log('add task raw token:', token)
-    const decodedToken = AuthService.decodeToken(token);
-    console.log('Decoded Token:', decodedToken);
     const userId = AuthService.decodeToken(token)?.id; // Decode the token to get the userId
-    console.log('Handle Add Task Decoded Token:', userId)
+  
        if (!userId) {
-      console.log("No user ID found");
+        console.log("No user ID found");
       return;
     }
 
@@ -79,20 +78,21 @@ const DashPage = () => {
       body: JSON.stringify({ title, description, userId, isComplete: false }),
     })
       .then((response) => response.json())
-      .then((newTask) => setTasks((prevTasks) => [...prevTasks, newTask]))
+  //    .then((newTask) => setTasks((prevTasks) => [...prevTasks, newTask]))
       .catch((error) => console.error("Error adding task:", error));
   };
 
-  const handleToggleComplete = (taskId: number) => {
-    // Update task's isComplete status
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, isComplete: !task.isComplete }
-          : task
-      )
-    );
-  };
+  //Moved to TaskList
+  // const handleToggleComplete = (taskId: number) => {
+  //   // Update task's isComplete status
+  //   setTasks((prevTasks) =>
+  //     prevTasks.map((task) =>
+  //       task.id === taskId
+  //         ? { ...task, isComplete: !task.isComplete }
+  //         : task
+  //     )
+  //   );
+  // };
 
   return (
     <main className="container-fluid d-flex flex-column min-vh-100">
@@ -114,7 +114,7 @@ const DashPage = () => {
                 <AddTaskButton onAddTask={() => setShowModal(true)} />
                 <h2 className="task-header">TASK LIST</h2>
               </div>
-              <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
+              <TaskList />
             </div>
         </div>
       </div>

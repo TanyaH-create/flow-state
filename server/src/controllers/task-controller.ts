@@ -34,7 +34,8 @@ export const createTask = async (req: Request, res: Response) => {
 export const updateTask = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const { isComplete } = req.body;
+    const { isComplete, stickerUrl } = req.body;
+    console.log('Update Task', isComplete, id)
 
     const task = await Task.findByPk(id);
     if (!task) {
@@ -42,12 +43,35 @@ export const updateTask = async (req: Request, res: Response) => {
     }
 
     task.isComplete = isComplete;
+    
+    //store sticker so t hat of logout the back in the sticer will appear
+    if (isComplete && stickerUrl) {
+      task.stickerUrl = stickerUrl; // Store the sticker URL
+    } else if (!isComplete) {
+      task.stickerUrl = ''; // Remove sticker if task is marked incomplete
+    }
+
     await task.save();
+
+
 
     return res.status(200).json(task);
   } catch (error) {
     console.error("Error updating task:", error);
     return res.status(500).json({ message: "Error updating task" });
+  }
+};
+
+
+// GET /tasks
+export const getAllTasks = async (_req: Request, res: Response) => {
+  try {
+    const tasks = await Task.findAll({
+      //attributes: { exclude: ['password'] }
+    });
+    res.json(tasks);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
 
