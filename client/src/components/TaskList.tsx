@@ -60,6 +60,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3001
       // Fetch a sticker if marking as complete and no sticker exists
       if (newStatus && !stickerUrl) {
         try {
+          console.log('GO FETCH THE STICKER')
           const response = await fetch(`${API_BASE_URL}/getSticker`);
           const data = await response.json();
           stickerUrl = data.stickerUrl;

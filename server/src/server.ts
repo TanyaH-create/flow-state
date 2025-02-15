@@ -18,11 +18,11 @@ app.use(express.static('../client/dist'));
 app.use(express.json()); //parse all JSON request boodies
 app.use(routes); //mount all API endpoints from routes
 
-const GIPHY_API_KEY = process.env.GIPHY_KEY;
+const GIPHY_API_KEY = process.env.GIPHY_API_KEY;
 const GIPHY_URL='https://api.giphy.com/v1/gifs/search'
 
 app.get('/getSticker', async (_req, res) => {
-  
+  console.log('OKAY _ GETTING THE STICKER')
   try {
     const response = await fetch(`${GIPHY_URL}?api_key=${GIPHY_API_KEY}&q=good-job&limit=25&offset=0&rating=g&lang=en&bundle=messaging_non_clips`);
     const data = await response.json();
