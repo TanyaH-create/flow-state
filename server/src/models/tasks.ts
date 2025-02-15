@@ -6,6 +6,7 @@ export interface TaskAttributes {
   title: string;
   description: string;
   isComplete: boolean;
+  stickerUrl?: string; // Optional sticker URL
 }
 
 export interface TaskCreationAttributes extends Optional<TaskAttributes, 'id' | 'isComplete'> {}
@@ -16,6 +17,7 @@ export class Task extends Model<TaskAttributes, TaskCreationAttributes> implemen
   public title!: string;
   public description!: string;
   public isComplete!: boolean;
+  public stickerUrl?: string;
 }
 
 export function TaskFactory(sequelize: Sequelize): typeof Task {
@@ -49,6 +51,10 @@ export function TaskFactory(sequelize: Sequelize): typeof Task {
                 allowNull: false,
                 defaultValue: false,
             },
+            stickerUrl: {  // Add this field
+                type: DataTypes.STRING,
+                allowNull: true,
+              },
         },
         {
             tableName: 'tasks',
