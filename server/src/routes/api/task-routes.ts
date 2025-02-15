@@ -1,6 +1,7 @@
 import { Router } from "express";
 import authenticateToken  from "../../middleware/authMiddleware.js"; // Assuming authenticateToken is a middleware that checks JWT
-import { createTask, updateTask } from "../../controllers/task-controller.js"; // Import createTask controller
+import { createTask, updateTask, getAllTasks } from "../../controllers/task-controller.js"; // Import createTask controller
+
 
 const router = Router();
 
@@ -8,9 +9,11 @@ const router = Router();
 // Protect this route with the authenticateToken middleware to ensure the user is authenticated
 router.post('/', authenticateToken, createTask);
 
-router.put("/:id", authenticateToken, updateTask); // New route to update task
+router.put("/:id",  updateTask); // New route to update task
 
-//Test route
+router.get('/', authenticateToken, getAllTasks);
+
+//Testrouter.get('/', authenticateToken, getAllTasks); route
 // router.post("/tasks", authenticateToken, async (_req: Request, res: Response) => {
 //     console.log("POST /task route hit");
 //     res.send("POST route working");

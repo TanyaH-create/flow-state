@@ -51,3 +51,15 @@ export const updateTask = async (req: Request, res: Response) => {
   }
 };
 
+
+// GET /tasks
+export const getAllTasks = async (_req: Request, res: Response) => {
+  try {
+    const tasks = await Task.findAll({
+      //attributes: { exclude: ['password'] }
+    });
+    res.json(tasks);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};

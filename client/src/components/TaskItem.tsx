@@ -30,7 +30,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
     const updatedTask = { ...task, isComplete: !task.isComplete };
 
     try {
-      const response = await fetch(`${API_BASE_URL}/tasks/${task.id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${task.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedTask),
