@@ -115,7 +115,10 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
           />
         </div>
         {task.isComplete && stickerUrl && (
-          <img src={stickerUrl} alt="celebration sticker" className="w-12 h-12 ml-4" />
+          <div className="flex flex-col items-center">
+             <img src={stickerUrl} alt="celebration sticker" className="w-12 h-12" />
+             <span className="text-xs text-gray-500 mt-1 text-center">Powered by <a href="https://giphy.com" target="_blank" rel="noopener noreferrer" className="text-blue-500">GIPHY</a></span>
+          </div>
         )}
       </div>
     </div>
