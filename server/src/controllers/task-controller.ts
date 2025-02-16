@@ -48,10 +48,13 @@ export const updateTask = async (req: Request, res: Response) => {
     if (!task) {
       return res.status(404).json({ message: "Task not found" });
     }
-
-    if (stickerUrl) {
-      task.stickerUrl = stickerUrl;
+    // Only update the stickerUrl if it was never set before
+    if (stickerUrl && !task.stickerUrl) {
+        task.stickerUrl = stickerUrl;
     }
+    // if (stickerUrl) {
+    //   task.stickerUrl = stickerUrl;
+    // }
 
     task.isComplete = isComplete;
     await task.save();
