@@ -48,8 +48,12 @@ const DashPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('DashPage GET data:', data)
-        setTasks(data.tasks || []); // Set tasks (empty if no tasks)
+        console.log('DashPage GET data:', data);
+        setTasks(data.tasks.map((task: Task) => ({
+          ...task,
+          stickerUrl: task.stickerUrl || null, // Ensure sticker URL is included
+        })));
+        //setTasks(data.tasks || []); // Set tasks (empty if no tasks)
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -60,7 +64,6 @@ const DashPage = () => {
 
   const handleAddTask = (title: string, description: string) => {
     const token = AuthService.getToken();
- 
     const userId = AuthService.decodeToken(token)?.id; // Decode the token to get the userId
   
        if (!userId) {
@@ -83,16 +86,15 @@ const DashPage = () => {
       .catch((error) => console.error("Error adding task:", error));
   };
 
-  const handleToggleComplete = (taskId: number) => {
+  const handleToggleComplete = (taskId: number, updatedTask: Task) => {
     // Update task's isComplete status
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, isComplete: !task.isComplete }
-          : task
-      )
-    );
-  };
+ setTasks((prevTasks) =>   
+    prevTasks.map((task) => 
+      //task.id === taskId ? { ...task, isComplete: !task.isComplete } : task
+      task.id === taskId ? updatedTask : task
+    ) // Closing parenthesis for map()
+  );
+};
 
   return (
     <main className="container-fluid d-flex flex-column min-vh-100">

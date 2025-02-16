@@ -1,6 +1,6 @@
 //TaskItem.tsx
-// TaskItem.tsx
-import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import AuthService from '../utils/authService.ts';
 
 interface Task {
@@ -36,28 +36,28 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
       const data = await response.json();
       console.log('Sticker has been fetched:', data);
       setStickerUrl(data.stickerUrl); // Set the sticker URL to the local state
+      return data;
     } catch (error) {
       console.error("Error fetching sticker:", error);
       setStickerUrl(null);
+      return null;
     }
   };
 
-  useEffect(() => {
-    if (task.isComplete && !stickerUrl) {
-      fetchSticker();  // Fetch the sticker URL when the task is marked complete
-    }
-  }, [task.isComplete]); // This effect runs when task.isComplete changes
-
+  
   const handleToggleComplete = async () => {
     const token = AuthService.getToken();
     let updatedStickerUrl = stickerUrl;
 
     try {
       // If the task is not complete, fetch the sticker
-      if (!task.isComplete && !stickerUrl) {
+      if (!task.isComplete && !task.stickerUrl) {
         console.log('Task has been toggled - fetch sticker');
-        await fetchSticker();  // Ensure stickerUrl is set when the task is toggled
-        updatedStickerUrl = stickerUrl;
+        const data = await fetchSticker();
+        if (data) {
+          updatedStickerUrl = data.stickerUrl;  // Use the returned sticker URL
+          console.log('TASK ITEM: Sticker has been fetched, updatedSticker:', updatedStickerUrl);
+        }
       }
 
       const updatedTask = {
