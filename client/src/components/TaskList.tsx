@@ -32,6 +32,12 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete }) => {
     onToggleComplete(taskId, updatedTask);  // Pass the updated task back to the parent
   };
 
+  const handleDeleteTask = (taskId: number) => {
+    // Update task list state to trigger a re-render
+    const updatedTasks = taskList.filter((task) => task.id !== taskId);
+    setTaskList(updatedTasks);
+  };
+
   return (
     <div className="task-list border p-3 rounded">
       {taskList.length === 0 ? (
@@ -40,7 +46,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onToggleComplete }) => {
         <ul className="list-group">
           {taskList.map((task) => (
             <li key={task.id} className="list-group-item">
-              <TaskItem task={task} onToggleComplete={handleToggleComplete} />
+              <TaskItem task={task} 
+              onToggleComplete={handleToggleComplete}
+              onDeleteTask={handleDeleteTask} 
+              />
             </li>
           ))}
         </ul>

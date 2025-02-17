@@ -1,4 +1,3 @@
-//TaskItem.tsx
 // TaskItem.tsx
 import React, { useState, useEffect } from "react";
 import AuthService from '../utils/authService.ts';
@@ -21,9 +20,10 @@ interface TaskItemProps {
     stickerUrl?: string;
   };
   onToggleComplete: (taskId: number, updatedTask: Task) => void;
+  onDeleteTask: (taskId: number) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete, onDeleteTask}) => {
   console.log('TaskItem rendering:', task);
 
   const [stickerUrl, setStickerUrl] = useState<string | null>(task.stickerUrl || null); // Local state for sticker URL
@@ -95,6 +95,26 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
     }
   };
 
+  const handleDelete = async () => {
+    const token = AuthService.getToken();
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        onDeleteTask(task.id);
+      } else {
+        console.error("Failed to delete task");
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
+
   return (
     <div className="border p-4 rounded-md shadow-md bg-light text-dark">
       <div className="mb-2">
@@ -117,6 +137,9 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
         {task.isComplete && stickerUrl && (
           <img src={stickerUrl} alt="celebration sticker" className="w-12 h-12 ml-4" />
         )}
+        <button onClick={handleDelete} style={{ marginLeft: "10px", backgroundColor: "red", color: "white" }}>
+          Delete
+        </button>
       </div>
     </div>
   );
