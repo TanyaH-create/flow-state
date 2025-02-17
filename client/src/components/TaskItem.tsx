@@ -137,7 +137,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete, onDeleteTas
         {task.isComplete && stickerUrl && (
           <img src={stickerUrl} alt="celebration sticker" className="w-12 h-12 ml-4" />
         )}
-        <button onClick={handleDelete} style={{ marginLeft: "10px", backgroundColor: "red", color: "white" }}>
+        <button onClick={handleDelete}>
           Delete
         </button>
       </div>

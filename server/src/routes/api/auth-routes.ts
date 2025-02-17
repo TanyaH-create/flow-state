@@ -23,6 +23,6 @@ const router = Router();
   } catch (error) {
     res.status(500).json({ message: "Server error fetching dashboard data" });
   } 
-});  
+});
 
 export default router;

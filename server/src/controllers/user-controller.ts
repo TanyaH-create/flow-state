@@ -23,6 +23,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
       email,
       password,     
       rank: 0,
+      progress: 0,
     });
 
 

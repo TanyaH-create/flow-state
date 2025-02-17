@@ -8,6 +8,7 @@ interface UserAttributes {
   email: string;
   password: string;
   rank: number; 
+  progress: number;
 }
 
 //rank and id are optional when creating new user
@@ -18,6 +19,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public email!: string;
   public password!: string;
   public rank!: number;
+  public progress!: number;
 
   // Hash the password before saving the user
   public async setPassword(password: string) {
@@ -51,6 +53,11 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         allowNull: false,
       },
       rank: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      progress: {
         type: DataTypes.INTEGER,
         allowNull: false,
         defaultValue: 0,

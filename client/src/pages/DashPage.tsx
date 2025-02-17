@@ -10,10 +10,12 @@ import TaskList from '../components/TaskList';
 import AddTaskButton from '../components/AddTaskButton.tsx';
 import NavBar from '../components/NavBar'; // Import NavBar
 import AddTaskModal from '../components/AddTaskModal.tsx'; // Import Modal
+import ProgressTracker from '../components/ProgressTracker.tsx';
 import './DashPage.css';
 
 const DashPage = () => {
-  console.log('DashPage Renderinng')  
+  console.log('DashPage Renderinng');
+  const [progress, setProgress] = useState(0);
 
   // TLH 2/11/25 - set up type
   interface Task {
@@ -50,6 +52,7 @@ const DashPage = () => {
       .then((data) => {
         console.log('DashPage GET data:', data)
         setTasks(data.tasks || []); // Set tasks (empty if no tasks)
+        setProgress(data.progress || 0); // Set progress (0 if no progress)
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -84,14 +87,33 @@ const DashPage = () => {
   };
 
   const handleToggleComplete = (taskId: number) => {
-    // Update task's isComplete status
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId
-          ? { ...task, isComplete: !task.isComplete }
-          : task
-      )
-    );
+    setTasks((prevTasks) => {
+      const updatedTasks = prevTasks.map((task) => {
+        if (task.id === taskId) {
+          const newIsComplete = !task.isComplete;
+          return { ...task, isComplete: newIsComplete };
+        }
+        return task;
+      });
+  
+      // Calculate new progress
+      const completedCount = updatedTasks.filter((task) => task.isComplete).length;
+      const newProgress = Math.min(completedCount * 20, 100);
+      setProgress(newProgress);
+  
+      // Send update to backend
+      const token = AuthService.getToken();
+      fetch("/api/progress", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ progress: newProgress }),
+      }).catch((error) => console.error("Error updating progress:", error));
+  
+      return updatedTasks;
+    });
   };
 
   return (
@@ -103,7 +125,13 @@ const DashPage = () => {
         {/* Left Side */}
         <div className='left-side-dash'>
           <div className="badge-list-container">         
-            <h2 className="h5">ADD BADGE SECTION ON THIS SIDE</h2>
+            <ProgressTracker progress={progress} />
+      {/* <button
+        className="btn btn-primary mt-3"
+        onClick={() => setProgress((prev) => Math.min(prev + 20, 100))}
+      >
+        Complete Task
+      </button> */}
          </div>
          </div>
         
