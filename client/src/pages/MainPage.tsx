@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginModal from "../components/LoginModal";
 import ResetPassword from "./ResetPassword";
-import logo from "../assets/images/Logo.png"
+import logo from "../assets/images/Logo.png";
 import AuthService from "../utils/authService"; // Import AuthService to check token
 
 function MainPage () {
@@ -75,11 +75,16 @@ function MainPage () {
   return (
     <>
      <main className="main-container d-flex">
-      <div className='left-side p-5'>
-         <img src= { logo }  alt="logo" className="logo" />
+      <div className='left-side'>
+         <img 
+             src= { logo }  
+             alt="logo" 
+             className="logo" 
+             />
       </div>
       <div className="right-side p-5">
-        <div className="login-container">
+        <div 
+           className="login-container" >
         <h2>
             {isResetPasswordMode ? "Reset Password" : 
             isLoginMode ? "Welcome Back!" : "Create an Account"}
