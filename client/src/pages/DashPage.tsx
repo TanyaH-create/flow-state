@@ -1,19 +1,15 @@
-//DashPage.tsx
-//DashPage fetches tasks from backend then passes 
-//tasks down to TaskList as initialTasks.
-//TaskList renders the tasks using TaskItem
-
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import AuthService from '../utils/authService.ts';
-import TaskList from '../components/TaskList';
-import AddTaskButton from '../components/AddTaskButton.tsx';
-import NavBar from '../components/NavBar'; // Import NavBar
-import AddTaskModal from '../components/AddTaskModal.tsx'; // Import Modal
-import './DashPage.css';
+import { Container, Row, Col, Button } from "react-bootstrap"; // Import Button from React-Bootstrap
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import AuthService from "../utils/authService.ts";
+import TaskList from "../components/TaskList.tsx";
+//import AddTaskButton from '../components/AddTaskButton.tsx';
+import NavBar from "../components/NavBar.tsx"; // Import NavBar
+import AddTaskModal from "../components/AddTaskModal.tsx"; // Import Modal
+import "./DashPage.css";
 
 const DashPage = () => {
-  console.log('DashPage Renderinng')  
+  console.log("DashPage is Renderinng");
 
   // TLH 2/11/25 - set up type
   interface Task {
@@ -23,23 +19,22 @@ const DashPage = () => {
     isComplete: boolean;
     stickerUrl?: string;
   }
-  
-  
+
   const navigate = useNavigate(); // to navigate programmatically
   // TLH 2/11/25 - add type Task
   const [tasks, setTasks] = useState<Task[]>([]);
   const [showModal, setShowModal] = useState<boolean>(false);
- 
+
   useEffect(() => {
     // Check if the user is logged in (by checking token validity)
     if (!AuthService.loggedIn()) {
       navigate("/"); // Redirect to home if not logged in
       return;
     }
-    console.log('User is logged in')
-      // If logged in, fetch dashboard data
+    console.log("User is logged in");
+    // If logged in, fetch dashboard data
     const token = AuthService.getToken();
-    
+
     fetch("/api/auth/dash", {
       method: "GET",
       headers: {
@@ -48,12 +43,14 @@ const DashPage = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('DashPage GET data:', data);
-        setTasks(data.tasks.map((task: Task) => ({
-          ...task,
-          stickerUrl: task.stickerUrl || null, // Ensure sticker URL is included
-        })));
-        //setTasks(data.tasks || []); // Set tasks (empty if no tasks)
+        console.log("DashPage GET data:", data);
+        setTasks(
+          data.tasks.map((task: Task) => ({
+            ...task,
+            stickerUrl: task.stickerUrl || null, // Ensure sticker URL is included
+          }))
+        );
+        // setTasks(data.tasks || []); // Set tasks (empty if no tasks)
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -65,61 +62,76 @@ const DashPage = () => {
   const handleAddTask = (title: string, description: string) => {
     const token = AuthService.getToken();
     const userId = AuthService.decodeToken(token)?.id; // Decode the token to get the userId
-  
-       if (!userId) {
+
+    if (!userId) {
       console.log("No user ID found");
       return;
     }
 
-    console.log('add task token:', token, 'userId:', userId);
-    
-    fetch('/api/tasks', {
-      method: 'POST',
+    console.log("ADDING TASK: retrieving token:", token, "and userId:", userId);
+
+    fetch("/api/tasks", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ title, description, userId, isComplete: false }),
     })
-      .then((response) => response.json())
-      .then((newTask) => setTasks((prevTasks) => [...prevTasks, newTask]))
+      .then((response) => {
+        console.log("FETCH TASKS raw response:", response);
+        return response.json();
+      })
+      .then((newTask) => {
+        console.log("FETCH TASKS newTask::", newTask);
+        setTasks((prevTasks) => [...prevTasks, newTask]);
+      })
       .catch((error) => console.error("Error adding task:", error));
   };
 
   const handleToggleComplete = (taskId: number, updatedTask: Task) => {
     // Update task's isComplete status
- setTasks((prevTasks) =>   
-    prevTasks.map((task) => 
-      //task.id === taskId ? { ...task, isComplete: !task.isComplete } : task
-      task.id === taskId ? updatedTask : task
-    ) // Closing parenthesis for map()
-  );
-};
+    console.log("DASH PAGE: Task list returned from TASK LIST:", updatedTask);
+    console.log("IS COMPLETE TOGGLE BUTTON CLICKED");
+
+    setTasks(
+      (prevTasks) =>
+        prevTasks.map((task) =>
+          //task.id === taskId ? { ...task, isComplete: !task.isComplete } : task
+          task.id === taskId ? updatedTask : task
+        ) // Closing parenthesis for map()
+    );
+  };
 
   return (
-    <main className="container-fluid d-flex flex-column min-vh-100">
+    <main className="d-flex flex-column min-vh-100">
       {/* Navigation Bar */}
       <NavBar />
-            
-      <div className="d-flex flex-grow-1 main-container">
-        {/* Left Side */}
-        <div className='left-side-dash'>
-          <div className="badge-list-container">         
-            <h2 className="h5">ADD BADGE SECTION ON THIS SIDE</h2>
-         </div>
-         </div>
-        
-         {/* Right Side */}
-        <div className="right-side-dash">
-            <div className="task-list-container">
-              <div className="task-header-container">
-                <AddTaskButton onAddTask={() => setShowModal(true)} />
-                <h2 className="task-header">TASK LIST</h2>
-              </div>
-              <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
+
+      {/* Main Content */}
+      <Container fluid className="mt-4">
+        <Row className="justify-content-center">
+          {/* Progress Bar Section */}
+          <Col md={4} className="mb-3">
+            <div className="d-flex flex-column align-items-center">
+              <h2 className="progress-header">PROGRESS</h2>
+              {/* Test Progress Bar */}
             </div>
-        </div>
-      </div>
+          </Col>
+
+          {/* Task List Section */}
+          <Col md={8}>
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h2 className="task-header">TASK LIST</h2>
+              <Button onClick={() => setShowModal(true)} variant="secondary">
+                Add Task
+              </Button>
+            </div>
+            <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
+          </Col>
+        </Row>
+      </Container>
+
       {/* Modal for Adding Task */}
       <AddTaskModal
         showModal={showModal}
@@ -127,8 +139,7 @@ const DashPage = () => {
         onSubmit={handleAddTask}
       />
     </main>
-  ); 
+  );
 };
-
 
 export default DashPage;
