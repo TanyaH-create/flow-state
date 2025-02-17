@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import AuthService from '../utils/authService.ts';
+import { Card, Form } from 'react-bootstrap';
 
 interface Task {
   id: number;
@@ -96,32 +97,32 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
   };
 
   return (
-    <div className="border p-4 rounded-md shadow-md bg-light text-dark">
+    <Card.Body className="custom-card-body p-3">
       <div className="mb-2">
-        <h3 className={`text-lg font-bold ${task.isComplete ? 'line-through text-gray-400' : ''}`}>
+        <h5 className={`text-lg font-weight-bold ${task.isComplete ? 'line-through text-muted' : ''}`}>
           {task.title}
-        </h3>
-        <p className="text-sm text-gray-600">{task.description}</p>
+        </h5>
+        <p className="text-sm text-secondary">{task.description}</p>
       </div>
 
-      <div className="flex items-center gap-2 mt-2">
-        <div className="flex items-center gap-2">
-          <span>{task.isComplete ? "Completed" : "Mark Complete"}</span>
-          <input
-            type="checkbox"
-            checked={task.isComplete}
-            onChange={handleToggleComplete}
-            className="w-5 h-5"
-          />
-        </div>
-        {task.isComplete && stickerUrl && (
-          <div className="flex flex-col items-center">
-             <img src={stickerUrl} alt="celebration sticker" className="w-12 h-12" />
-             <span className="text-xs text-gray-500 mt-1 text-center">Powered by <a href="https://giphy.com" target="_blank" rel="noopener noreferrer" className="text-blue-500">GIPHY</a></span>
-          </div>
-        )}
+      <div className="d-flex flex-column align-items-start gap-2 mt-3">
+        <Form.Check
+          type="checkbox"
+          label={task.isComplete ? "Completed" : "Mark Complete"}
+          checked={task.isComplete}
+          onChange={handleToggleComplete}
+          className="custom-checkbox"
+        />
+    {task.isComplete && stickerUrl && (
+      <div className="text-center mt-2">
+        <img src={stickerUrl} alt="celebration sticker" className="w-75" />
+        <small className="d-block mt-1 text-muted-xs">
+          Powered by <a href="https://giphy.com" target="_blank" rel="noopener noreferrer" className="text-info">GIPHY</a>
+        </small>
       </div>
-    </div>
+    )}
+  </div>
+</Card.Body>
   );
 };
 

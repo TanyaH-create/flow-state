@@ -1,24 +1,6 @@
 /* DashPagecss */
+ 
 
-.navbar {
-    background: linear-gradient(90deg, rgba(57,208,228,1) 0%, rgba(89,195,196,1) 67%, rgba(49,162,171,1) 100%);
-    /* background: var(--gradient-blue);   */
-    border-top: 10px solid var(--dark); /* Thicker border */
-    border-left: 10px solid var(--dark); /* Thicker border */
-    border-right: 10px solid var(--dark); /* Thicker border */
-    border-bottom: 10px solid var(--dark);
-    color: var(--dark);
-    margin: 0;
-    padding: 1rem;
-    width: 100%;
-  }
-  
-
-.main-container-dash {
-    border-left: 10px solid var(--dark); /* Thicker border */
-    border-right: 10px solid var(--dark); /* Thicker border */
-    border-bottom: 10px solid var(--dark); /* Thicker border */
-}
 
 /* Center title and right-align checkbox */
 .task-item-header {
@@ -70,9 +52,9 @@
     margin-top: auto; /* Pushes button to the bottom */
   }
 
-  .right-side-dash {
+  /* .right-side-dash {
     border-left: 10px solid var(--dark); /* Thicker border */
-    flex: 0 0 50%;
+    /* flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -80,38 +62,50 @@
     background-color: var(--light);
     display: flex;
     
-  }
+  }  */
   
-  .badge-list-container {
+  /* .badge-list-container {
     
     padding: 16px; /* Same as p-3 in Bootstrap */
-    width: 100%;
+    /* width: 100%;
     height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Makes space between tasks and button */
-  }
+  /* }   */
 
 
-  .left-side-dash {
+  /* .left-side-dash {
     flex: 0 0 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     background-color: var(--light);
+  } */
+
+  /* Custom CSS for the checkbox */
+
+  .custom-checkbox .form-check-input {
+    border: 2px solid black;  /* Set the border color to black and thickness to 2px */
   }
 
+  .custom-card-body {
+    border: 3px solid #00ABE4;  /* Set the border thickness to 3px and color to #00ABE4 */
+    border-radius: 8px;  /* Optional: Set border-radius for rounded corners */
+  }
+
+  .task-list-container {
+    border: 3px solid #404e5c ;  /* Set the border thickness to 3px and color to #00ABE4 */
+    border-radius: 8px;  /* Optional: Set border-radius for rounded corners */
+  }
+
+
+  /* RESPONSIVE STYLING */
   @media (max-width: 768px) {
-    .main-container-dash {
-      flex-direction: column; /* Stack left and right side on smaller screens */
-      border-left: 10px solid var(--dark); /* Thicker border */
-      border-right: 10px solid var(--dark); /* Thicker border */
-      border-bottom: 10px solid var(--dark); /* Thicker border */
-    }
 
-    .right-side-dash {
-      border-left: 0px; /* Thicker border */
-      border-top: 10px solid var(--dark); /* Thicker border */
-    }
-  }
+  /* Make TaskList a carousel when on small devices */
+ }
+
+  
+
