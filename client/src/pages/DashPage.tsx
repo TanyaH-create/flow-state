@@ -1,3 +1,5 @@
+//DashPage.tsx
+
 import { Container, Row, Col, Button } from "react-bootstrap"; // Import Button from React-Bootstrap
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -103,6 +105,14 @@ const DashPage = () => {
     );
   };
 
+  const handleDeleteTask = (taskId: number) => {
+    // Remove the task from the state
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    setTasks(updatedTasks); // Update the state to trigger a re-render
+  };
+
+
+
   return (
     <main className="d-flex flex-column min-vh-100">
       {/* Navigation Bar */}
@@ -127,7 +137,7 @@ const DashPage = () => {
                 Add Task
               </Button>
             </div>
-            <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} />
+            <TaskList tasks={tasks} onToggleComplete={handleToggleComplete} onDeleteTask={handleDeleteTask}/>
           </Col>
         </Row>
       </Container>
