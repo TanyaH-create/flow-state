@@ -90,9 +90,9 @@ export const deleteTask = async (req: Request, res: Response) => {
     const task = await Task.findByPk(id);
     if (task) {
       await task.destroy();
-      res.json({ message: 'User deleted' });
+      res.json({ message: 'Task deleted' });
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: 'Task not found' });
     }
   } catch (error: any) {
     res.status(500).json({ message: error.message });

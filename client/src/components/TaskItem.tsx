@@ -22,9 +22,10 @@ interface TaskItemProps {
     stickerUrl?: string;
   };
   onToggleComplete: (taskId: number, updatedTask: Task) => void;
+  onDeleteTask: (taskId: number) => void;
 }
 
-const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
+const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete, onDeleteTask }) => {
   console.log('TaskItem rendering:', task);
 
   const [stickerUrl, setStickerUrl] = useState<string | null>(task.stickerUrl || null); // Local state for sticker URL
@@ -96,6 +97,29 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
     }
   };
 
+  const handleDelete = async () => {
+    const token = AuthService.getToken();
+    
+    console.log('TASK ITEM: Making DELETE request to:', `${API_BASE_URL}/api/tasks/${task.id}`);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/tasks/${task.id}`, {
+        method: "DELETE",
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        (console.log('handle delete response from server task.id:', task.id))
+        onDeleteTask(task.id);
+      } else {
+        console.error("Failed to delete task");
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
+
   return (
     <Card.Body className="custom-card-body p-3">
       <div className="mb-2">
@@ -105,7 +129,7 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
         <p className="text-sm text-secondary">{task.description}</p>
       </div>
 
-      <div className="d-flex flex-column align-items-start gap-2 mt-3">
+      <div className="d-flex justify-content-between align-items-center mt-3">
         <Form.Check
           type="checkbox"
           label={task.isComplete ? "Completed" : "Mark Complete"}
@@ -113,16 +137,23 @@ const TaskItem: React.FC<TaskItemProps> = ({ task, onToggleComplete }) => {
           onChange={handleToggleComplete}
           className="custom-checkbox"
         />
-    {task.isComplete && stickerUrl && (
-      <div className="text-center mt-2">
-        <img src={stickerUrl} alt="celebration sticker" className="w-75" />
-        <small className="d-block mt-1 text-muted-xs">
-          Powered by <a href="https://giphy.com" target="_blank" rel="noopener noreferrer" className="text-info">GIPHY</a>
-        </small>
+        <button
+          onClick={handleDelete}
+          style={{ marginLeft: "10px", backgroundColor: "red", color: "white" }}
+        >
+          Delete
+        </button>
       </div>
-    )}
-  </div>
-</Card.Body>
+
+      {task.isComplete && stickerUrl && (
+        <div className="text-center mt-2">
+          <img src={stickerUrl} alt="celebration sticker" className="w-75" />
+          <small className="d-block mt-1 text-muted-xs">
+            Powered by <a href="https://giphy.com" target="_blank" rel="noopener noreferrer" className="text-info">GIPHY</a>
+          </small>
+        </div>
+      )}
+    </Card.Body>
   );
 };
 
