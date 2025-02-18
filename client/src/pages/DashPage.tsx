@@ -126,12 +126,6 @@ const DashPage = () => {
         <div className='left-side-dash'>
           <div className="badge-list-container">         
             <ProgressTracker progress={progress} />
-      {/* <button
-        className="btn btn-primary mt-3"
-        onClick={() => setProgress((prev) => Math.min(prev + 20, 100))}
-      >
-        Complete Task
-      </button> */}
          </div>
          </div>
         
