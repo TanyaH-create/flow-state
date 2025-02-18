@@ -31,13 +31,14 @@ Flow State is a gamified task management web application designed for individual
 
 ✅ **Daily Motivation** – Receive an inspirational quote from [Zen Quotes](https://zenquotes.io/) when the site is visited.
 
-![LandingPageResized](https://github.com/user-attachments/assets/01fe6184-8dd3-49d4-91b4-d580c165d94d)
-
-![createAccount](https://github.com/user-attachments/assets/b8ef8262-0e1b-4e48-897f-493595d229a1) ![WelcomeBack](https://github.com/user-attachments/assets/44024059-5825-453f-ae9a-29fbc552c81b)  ![resetPAssword](https://github.com/user-attachments/assets/a3ab9108-b29b-4feb-9efe-bf922ad8e6b0)
+![MainPage](https://github.com/user-attachments/assets/7f6e4e2e-0b9a-4072-8d87-449481e44c05)
 
 
+![Register](https://github.com/user-attachments/assets/2bf6122b-73ef-4f20-97b2-7cd39c3c9f05) ![Login](https://github.com/user-attachments/assets/b4b9bf40-0e1b-4e0a-97de-33aaf5093c6d) ![Reset](https://github.com/user-attachments/assets/6de59303-08f4-4b81-b760-d02df41649ec)
 
+![DAshbooard](https://github.com/user-attachments/assets/d3730813-8221-4a35-8d6c-d1767d81d523)
 
+![AddTask](https://github.com/user-attachments/assets/7f156a8f-9110-4e36-9b8d-1571a01559f8)
 
 
 
